@@ -32,6 +32,7 @@
 		C931CB791F5A4BB100D4AD88 /* CCFilterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C931CB781F5A4BB100D4AD88 /* CCFilterable.swift */; };
 		C95133311F5A57D800683BC1 /* CCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95133301F5A57D800683BC1 /* CCRequest.swift */; };
 		C96632811F617398006922C0 /* CCContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96632801F617398006922C0 /* CCContainer.swift */; };
+		C96632821F618384006922C0 /* CCCache.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C90C87351F4751EC00E5BE6E /* CCCache.xcdatamodeld */; };
 		C9940A3F1F5A633D0047A26F /* CCUpdateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */; };
 		C9989EC01F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9989EBF1F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift */; };
 		C9AE7D831F5A683C00DC0CE1 /* CCGarbageCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE7D821F5A683C00DC0CE1 /* CCGarbageCollector.swift */; };
@@ -394,6 +395,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C96632821F618384006922C0 /* CCCache.xcdatamodeld in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
