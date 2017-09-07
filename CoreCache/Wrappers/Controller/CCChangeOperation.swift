@@ -20,12 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+/// `CCObjectChangeOperation` provides an overview over possible change operations in a `CCController`'s objects.
+///
+/// - insertion(at: IndexPath):             Inserted an object at the given index path.
+/// - deletion(at: IndexPath):              Deleted the object at the given index path.
+/// - move(from: IndexPath, to: IndexPath): Moved the object at the source index path to the destination index path.
+/// - update(at: IndexPath:                 Updated the object at the given index path.
+public enum CCObjectChangeOperation {
+    
+    case insertion(at: IndexPath)
+    case deletion(at: IndexPath)
+    case move(from: IndexPath, to: IndexPath)
+    case update(at: IndexPath)
+    
+}
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// `CCSectionChangeOperation` provides an overview over possible change operation in a `CCController`'s sections.
+///
+/// - insertion(at: Int): Inserted a section at the given index.
+/// - deletion(at: Int):  Deleted the section at the given index.
+public enum CCSectionChangeOperation {
+    
+    case insertion(at: Int)
+    case deletion(at: Int)
+    
+}

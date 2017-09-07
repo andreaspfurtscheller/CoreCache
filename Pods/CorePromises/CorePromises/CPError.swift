@@ -20,12 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// An error that is thrown by the `CorePromises` framework.
+public enum CPError: Error {
+    
+    /// Indicates that a promise was created to fail.
+    case failingPromise
+    
+    /// Indicates that a promise was rejected due to it taking too long to fulfill.
+    case timeout
+    
+    /// Indicates that a promise was rejected after it has been retried to fulfill it.
+    case retryEnded
+    
+}

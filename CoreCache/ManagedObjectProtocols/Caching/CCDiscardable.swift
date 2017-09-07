@@ -20,12 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+/// The `CCDiscardable` protocol may be implemented by any objects that must be continuously deleted according to some
+/// predicate. The `isDiscardable` property defines whether the object may be deleted.
+/// The `garbageCollector` property on the `CCManager` requires any objects that should be "collected" (deleted) to
+/// implement the `CCDiscardable` protocol.
+public protocol CCDiscardable: CCManageable {
+    
+    /// The property to determine whether the object may be "discarded" (deleted).
+    /// The default implementation always returns `false`.
+    var isDiscardable: Bool { get }
+    
+}
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+public extension CCDiscardable {
+    
+    public var isDiscardable: Bool {
+        return false
+    }
+    
+}

@@ -20,12 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import UIKit
+import CorePromises
+import Alamofire
+import AlamofireImage
+import CoreUtility
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// The `CCAlamofireFetcher` provides a way of fetching an image using `Alamofire` in conjunction with
+/// `AlamofireImage`.
+public final class CCAlamofireFetcher: CCImageFetching {
+    
+    public func fetchImage(forUrl url: String) -> CPPromise<UIImage> {
+        return CPPromise { resolve, reject in
+            Alamofire.request(url).responseImage { response in
+                do {
+                    if let data = response.data {
+                        resolve(try some(UIImage(data: data)))
+                    } else {
+                        reject(try some(response.error))
+                    }
+                } catch let error {
+                    reject(error)
+                }
+            }
+        }
+    }
+    
+}

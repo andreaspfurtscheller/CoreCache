@@ -20,12 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import CoreData
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// The `CCManaged` class should be subclassed by all managed object classes so that the framework can work as well as
+/// possible.
+/// The class does not provide any public initializers. Call `Self.create` or similar methods to obtain an instance.
+open class CCManaged: NSManagedObject, CCManageable {
+    
+    internal override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
+    /// The default implementation of the main context returns the `CCManager.default.context`.
+    public static var mainContext: CCContext {
+        return CCManager.default.context
+    }
+    
+}

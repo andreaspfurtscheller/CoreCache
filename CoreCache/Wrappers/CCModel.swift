@@ -20,12 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import CoreData
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// The `CCModel` struct is a wrapper for a `NSManagedObjectModel`. Publicly, the wrapper does only support
+/// initialization with the name of the model.
+public struct CCModel {
+    
+    internal let objectModel: NSManagedObjectModel
+    
+    /// Initializes a model with the specified name in the specified bundle.
+    ///
+    /// - Parameters:
+    ///   - name:   The name of the model without any file extensions.
+    ///   - bundle: The bundle in which the model is located. The default is set to the main bundle.
+    ///
+    /// - Attention: The initializer terminates the program if the model cannot be found.
+    public init(_ name: String, bundle: Bundle = .main) {
+        self.objectModel = NSManagedObjectModel(contentsOf: bundle.url(forResource: name,
+                                                                       withExtension: "momd")!)!
+    }
+    
+    internal var entities: [NSManagedObject.Type] {
+        return objectModel.entities.lazy
+            .map { $0.managedObjectClassName }
+            .map { NSClassFromString($0) }
+            .map { $0 as! NSManagedObject.Type }
+    }
+    
+}

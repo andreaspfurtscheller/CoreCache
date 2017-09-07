@@ -20,12 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import UIKit
+import CorePromises
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// Implementing `CCImageFetching` protocol enables types to implement custom image fetching behavior for use in the
+/// `CCImageCache`.
+public protocol CCImageFetching {
+    
+    /// Fetches an image for the specified url.
+    ///
+    /// - Parameter url: The url to fetch an image for.
+    /// - Returns: A promise which is resolved as soon as the image from the given url has been loaded. The promise
+    ///            is rejected when an error occurs while fetching the image.
+    ///
+    /// - Attention: The method is not guaranteed to be called on the main thread.
+    func fetchImage(forUrl url: String) -> CPPromise<UIImage>
+    
+}

@@ -20,12 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import UIKit
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// The protocol that has to be implemented in order to use the `CCControllerCollectionView`.
+public protocol CCControllerDelegateCollectionViewDelegate: class {
+    
+    /// Configures the given cell at the given index path.
+    ///
+    /// - Parameters:
+    ///   - cell:      The cell to configure.
+    ///   - indexPath: The index path of the cell.
+    func configure(_ cell: UICollectionViewCell, at indexPath: IndexPath)
+    
+}

@@ -20,12 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import CoreData
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+/// The `CCFilterable` protocol enables types to declare restrictions when fetching objects.
+public protocol CCFilterable: CCManageable {
+    
+    /// An enumeration of fetch paths that it is applicable to filter by.
+    /// Typically, filters are defined as enums with associated values.
+    associatedtype Filter: CCFilterMapping
+    
+}
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+extension CCRequest where ResultType: CCFilterable {
+    
+    /// Filters the result of the request by the given 
+    ///
+    /// - Parameters:
+    ///   - filter:   The property and condition value for filtering.
+    ///   - relation: The relation to apply between the object and the object to filter by. The default is set to
+    ///               `equal`.
+    /// - Returns: The modified request that only includes values 
+    public func filterBy(_ filter: ResultType.Filter) -> CCRequest<ResultType> {
+        return filterBy(predicate: filter.predicate)
+    }
+    
+}

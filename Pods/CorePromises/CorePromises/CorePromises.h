@@ -22,10 +22,12 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+//! Project version number for CorePromises.
+FOUNDATION_EXPORT double CorePromisesVersionNumber;
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
+//! Project version string for CorePromises.
+FOUNDATION_EXPORT const unsigned char CorePromisesVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <CorePromises/PublicHeader.h>
+
+

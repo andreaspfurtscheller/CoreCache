@@ -20,12 +20,62 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import UIKit
+import CoreData
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+@objc(CCImage)
+internal final class CCImage: CCManaged {
+    
+    var data: Data {
+        return cd_image as Data
+    }
+    
+    var size: Int {
+        return cd_image.length
+    }
+    
+    @NSManaged
+    private var cd_image: NSData
+    @NSManaged
+    private var cd_lastAccessed: NSDate
+    @NSManaged
+    private var cd_url: String
+    
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+        cd_lastAccessed = Date() as NSDate
+    }
+    
+    override func awakeFromFetch() {
+        super.awakeFromFetch()
+        cd_lastAccessed = Date() as NSDate
+    }
+    
+}
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
+extension CCImage: CCSortable {
+    
+    internal enum SortPath: String, CCPath {
+        case lastAccessed = "cd_lastAccessed"
+    }
+    
+}
 
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+extension CCImage: CCIndexable {
+    
+    typealias PrimaryKeyType = String
+    
+    static var primaryKeyPath: String {
+        return "cd_url"
+    }
+    
+}
+
+extension CCImage: CCUpdateable {
+    
+    var imageData: Data {
+        get { return cd_image as Data }
+        set { cd_image = newValue as NSData }
+    }
+    
+}

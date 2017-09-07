@@ -20,12 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import Foundation
+import CoreUtility
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// An error that is posted to the notification center by the `CoreCache` framework.
+enum CCErrorNotification: String, CUNotification {
+    
+    /// Creating a persistent store in CoreData failed.
+    case storeCreationDidFail
+    
+    /// A CoreData fetch was unsuccessful.
+    case fetchDidFail
+    
+    /// A CoreData save was unsuccessful.
+    case saveDidFail
+}

@@ -20,12 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import UIKit
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// `CUImageCompression` is an enum that wraps the compression for images and provides utility functions.
+///
+/// - png: Images should be compressed as png.
+/// - jpeg(CGFloat): Images should be compressed as jpeg with the given compressionQuality in [0, 1].
+public enum CUImageCompression {
+    
+    case png
+    case jpeg(CGFloat)
+    
+    public func data(from image: UIImage) -> Data {
+        switch self {
+        case .png:
+            return UIImagePNGRepresentation(image)!
+        case .jpeg(let compression):
+            return UIImageJPEGRepresentation(image, compression)!
+        }
+    }
+    
+}

@@ -20,12 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import CoreData
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+public protocol CCUpdateable {
+    
+}
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
+extension CCUpdateable where Self: CCManaged {
+    
+    @discardableResult
+    public func update<T>(_ path: ReferenceWritableKeyPath<Self, T>, to value: T) -> Self {
+        self[keyPath: path] = value
+        return self
+    }
+    
+}
 
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>

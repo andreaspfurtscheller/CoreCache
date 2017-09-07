@@ -20,12 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// The `some` function returns a value in case the given optional wraps a value and throws an exception otherwise,
+/// as this behavior is desirable to minimize code size in some cases.
+///
+/// - Throws: In case the given value does not wrap a value.
+/// - Returns: An unwrapped value in case the given optional was wrapping a value.
+@inline(__always)
+public func some<T>(_ value: T?) throws -> T {
+    switch value {
+    case .none:
+        throw CUError.unwrappingFailed
+    case .some(let value):
+        return value
+    }
+}

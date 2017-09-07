@@ -20,12 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// The `CCSortOrder` enum defines sort orders possibilites when sorting requests. It replaces a simple boolean to
+/// increase readability.
+///
+/// - ascending:  The key path's sorting shall be performed ascendingly.
+/// - descending: The key path's sorting shall be performed descendingly.
+public enum CCSortOrder {
+    
+    case ascending
+    case descending
+    
+    internal var isAscending: Bool {
+        return self == .ascending
+    }
+    
+}

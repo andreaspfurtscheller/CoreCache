@@ -20,12 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import UIKit
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
-
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+/// A table view cell subclass that provides a transient queue (operating on the main thread) on which all asynchronous
+/// operations modifying the table view cell should be performed (reason: table view cells might be reused).
+open class CPTransientTableViewCell: UITableViewCell {
+    
+    /// The transient queue on which to perform all asynchronous modifications to the the cell.
+    public private(set) var transientQueue = CPTransientQueue(.main)
+    
+    /// The method that is executed when a table view cell is about to be reused.
+    /// The current transient queue is invalidated and a new one is created.
+    override open func prepareForReuse() {
+        super.prepareForReuse()
+        
+        transientQueue.invalidate()
+        transientQueue = CPTransientQueue(.main)
+    }
+    
+}

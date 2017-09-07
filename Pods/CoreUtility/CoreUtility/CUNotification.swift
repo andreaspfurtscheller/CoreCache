@@ -20,12 +20,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+/// `CUNotification` is a protocol that may be implemented by an arbitrary enum type to be easily posted
+/// to the `NotificationCenter`.
+public protocol CUNotification {
+    var name: Notification.Name { get }
+}
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
+extension RawRepresentable where RawValue == String, Self: CUNotification {
+    public var name: Notification.Name {
+        return Notification.Name(self.rawValue)
+    }
+}
 
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+public extension NotificationCenter {
+    
+    /// A wrapper for `Foundation`'s `post` method for easier use with `CUNotification`.
+    public func post(name notification: CUNotification,
+                     object: Any? = nil,
+                     userInfo: [AnyHashable: Any]? = nil) {
+        self.post(name: notification.name,
+                  object: object,
+                  userInfo: userInfo)
+    }
+    
+    /// A wrapper for `Foundation`'s `addObserver` method for easier use with `CUNotification`.
+    public func addObserver(_ observer: Any, selector: Selector, name: CUNotification, object: Any?) {
+        self.addObserver(observer, selector: selector, name: name.name, object: object)
+    }
+    
+}

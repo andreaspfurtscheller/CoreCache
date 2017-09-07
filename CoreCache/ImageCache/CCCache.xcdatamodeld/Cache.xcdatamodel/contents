@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13233.4" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CCImage" representedClassName="CCImage" syncable="YES">
+        <attribute name="cd_imageData" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="cd_lastAccessed" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cd_url" attributeType="String" syncable="YES"/>
+        <fetchIndex name="index_url">
+            <fetchIndexElement property="cd_url" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <elements>
+        <element name="CCImage" positionX="-63" positionY="-18" width="128" height="90"/>
+    </elements>
+</model>

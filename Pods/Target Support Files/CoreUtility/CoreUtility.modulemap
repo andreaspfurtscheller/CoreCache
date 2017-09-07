@@ -1,0 +1,6 @@
+framework module CoreUtility {
+  umbrella header "CoreUtility-umbrella.h"
+
+  export *
+  module * { export * }
+}

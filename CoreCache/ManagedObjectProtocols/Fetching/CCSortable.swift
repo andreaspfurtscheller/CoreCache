@@ -20,12 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import CoreData
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+/// The `CCSortable` protocol enables `CCRequest`s to be sortable by the provided key paths.
+public protocol CCSortable: CCManageable {
+    
+    /// An enumeration of sort paths that it is applicable to sort by.
+    /// Typically, sort paths are defined as enums with raw values as `String`.
+    associatedtype SortPath: CCPath
+    
+}
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+extension CCRequest where ResultType: CCSortable {
+    
+    /// Sorts the request by the given sort path in the given sort order.
+    /// The method may be applied multiple times for sorting different properties.
+    ///
+    /// - Parameters:
+    ///   - sortPath:  The sort path to sort the request's results by.
+    ///   - sortOrder: The order in which to sort the request's results for the given sort path.
+    /// - Returns: The modified request.
+    public func sortBy(_ sortPath: ResultType.SortPath, _ sortOrder: CCSortOrder) -> CCRequest<ResultType> {
+        return sortBy(keyPath: sortPath.rawValue, sortOrder: sortOrder)
+    }
+    
+}

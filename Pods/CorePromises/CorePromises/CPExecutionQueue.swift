@@ -20,12 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for CoreCache.
-FOUNDATION_EXPORT double CoreCacheVersionNumber;
+/// The `CPExecutionQueue` protocol may be implemented to create arbitrary execution queues to use when executing
+/// promises.
+public protocol CPExecutionQueue {
+    
+    /// Executes the given closure according to the implementation. It is advisable to perform execution
+    /// asynchronously to mimic the Promises' desired behavior.
+    /// Most of the time, `DispatchQueue` and `CCTransientQueue` should be sufficient.
+    ///
+    /// - Parameter work: The closure to execute.
+    func execute(work: @escaping () -> Void)
+}
 
-//! Project version string for CoreCache.
-FOUNDATION_EXPORT const unsigned char CoreCacheVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CoreCache/PublicHeader.h>
+extension DispatchQueue: CPExecutionQueue {
+    
+    /// Executes the given closure asynchronously.
+    ///
+    /// - Parameter work: The closure to execute.
+    public func execute(work: @escaping () -> Void) {
+        self.async(execute: work)
+    }
+    
+}

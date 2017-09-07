@@ -1,0 +1,6 @@
+framework module CorePromises {
+  umbrella header "CorePromises-umbrella.h"
+
+  export *
+  module * { export * }
+}
