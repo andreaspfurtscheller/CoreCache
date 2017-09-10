@@ -133,7 +133,7 @@ public final class CCImageCache {
         let context = manager.createBackgroundChildContext()
         context.async {
             let results = CCImage.request()
-                .sortBy(.lastAccessed, .ascending)
+                .sorted(by: .lastAccessed, .ascending)
                 .with(fetchBatchSize: 10)
                 .fetch(in: context)
             var currentSize = self.size
