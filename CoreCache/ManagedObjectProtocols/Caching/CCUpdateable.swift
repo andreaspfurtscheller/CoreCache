@@ -26,13 +26,15 @@ public protocol CCUpdateable {
     
     associatedtype Updater: CCUpdateMapping
     
+    static func update(_ property: Updater, on object: Self)
+    
 }
 
 extension CCUpdateable where Self: CCManaged {
     
     @discardableResult
     public func update(_ property: Updater) -> Self {
-        property.update()
+        Self.update(property, on: self)
         return self
     }
     

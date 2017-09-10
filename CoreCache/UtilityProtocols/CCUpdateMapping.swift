@@ -24,6 +24,4 @@ import Foundation
 
 public protocol CCUpdateMapping {
     
-    func update()
-    
 }

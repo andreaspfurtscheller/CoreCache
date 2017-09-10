@@ -73,9 +73,14 @@ extension CCImage: CCIndexable {
 
 extension CCImage: CCUpdateable {
     
-    var imageData: Data {
-        get { return cd_image as Data }
-        set { cd_image = newValue as NSData }
+    enum Updater: CCUpdateMapping {
+        case imageData(Data)
+    }
+    
+    static func update(_ property: CCImage.Updater, on object: CCImage) {
+        switch property {
+        case .imageData(let data): object.cd_image = data as NSData
+        }
     }
     
 }

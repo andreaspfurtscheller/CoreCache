@@ -98,7 +98,7 @@ public final class CCImageCache {
         let object = CCImage.object(forPrimaryKey: url, in: context)
         self.size -= object?.size ?? 0
         let inserted = (object ?? CCImage.create(in: context))
-            .update(\.imageData, to: compression.data(from: image))
+            .update(.imageData(compression.data(from: image)))
         self.size += inserted.size
     }
     
