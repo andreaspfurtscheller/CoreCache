@@ -34,6 +34,8 @@ public protocol CCCachable: CCIndexable {
     static func map<Container: CCContainer>(from container: Container, to object: Self)
                     where Container.PrimaryKeyType == Self.PrimaryKeyType
     
+    static func map<T>(from container: T, to object: Self)
+    
 }
 
 public extension CCCachable {
@@ -41,6 +43,10 @@ public extension CCCachable {
     static func map<Container: CCContainer>(from container: Container, to object: Self)
         where Container.PrimaryKeyType == Self.PrimaryKeyType {
             // do nothing
+    }
+    
+    static func map<T>(from container: T, to object: Self) {
+        // do nothing
     }
     
 }
@@ -51,9 +57,17 @@ public extension CCCachable where Self: CCManaged {
     public static func scratch<Container: CCContainer>(with container: Container,
                                                        in context: CCContext = CCManager.default.context) -> Self
         where Container.PrimaryKeyType == Self.PrimaryKeyType {
-            let object = Self.createIfNeeded(forPrimaryKey: container.primaryKey)
+            let object = Self.createIfNeeded(forPrimaryKey: container.primaryKey, in: context)
             map(from: container, to: object)
             return object
+    }
+    
+    @discardableResult
+    public static func scratch<T>(with container: T, primaryKey: PrimaryKeyType,
+                                  in context: CCContext = CCManager.default.context) -> Self {
+        let object = Self.createIfNeeded(forPrimaryKey: primaryKey, in: context)
+        map(from: container, to: object)
+        return object
     }
     
 }
