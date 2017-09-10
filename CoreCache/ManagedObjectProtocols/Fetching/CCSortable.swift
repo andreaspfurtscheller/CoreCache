@@ -40,7 +40,7 @@ extension CCRequest where ResultType: CCSortable {
     ///   - sortPath:  The sort path to sort the request's results by.
     ///   - sortOrder: The order in which to sort the request's results for the given sort path.
     /// - Returns: The modified request.
-    public func sortBy(_ sortPath: ResultType.SortPath, _ sortOrder: CCSortOrder) -> CCRequest<ResultType> {
+    public func sorted(by sortPath: ResultType.SortPath, _ sortOrder: CCSortOrder) -> CCRequest<ResultType> {
         return sortBy(keyPath: sortPath.rawValue, sortOrder: sortOrder)
     }
     

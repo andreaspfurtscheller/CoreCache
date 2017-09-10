@@ -40,7 +40,7 @@ extension CCRequest where ResultType: CCFilterable {
     ///   - relation: The relation to apply between the object and the object to filter by. The default is set to
     ///               `equal`.
     /// - Returns: The modified request that only includes values 
-    public func filterBy(_ filter: ResultType.Filter) -> CCRequest<ResultType> {
+    public func filtered(by filter: ResultType.Filter) -> CCRequest<ResultType> {
         return filterBy(predicate: filter.predicate)
     }
     
