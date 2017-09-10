@@ -21,6 +21,7 @@
 		C91D14991F5B68F700210514 /* CCChangeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91D14981F5B68F700210514 /* CCChangeOperation.swift */; };
 		C91D149B1F5B78FC00210514 /* CCControllerDelegateCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91D149A1F5B78FC00210514 /* CCControllerDelegateCollectionView.swift */; };
 		C91D149D1F5B7EF500210514 /* CCGroupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91D149C1F5B7EF500210514 /* CCGroupable.swift */; };
+		C91DB2281F65FFE8004AB57D /* CCUpdateMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91DB2271F65FFE8004AB57D /* CCUpdateMapping.swift */; };
 		C92BC6E11F51AAED00B2315F /* CCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BC6E01F51AAED00B2315F /* CCManager.swift */; };
 		C92BC6F11F51B91F00B2315F /* CCCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BC6F01F51B91F00B2315F /* CCCachable.swift */; };
 		C92FAC661F5B26CE0020EC7A /* CCObserveable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92FAC651F5B26CE0020EC7A /* CCObserveable.swift */; };
@@ -79,6 +80,7 @@
 		C91D14981F5B68F700210514 /* CCChangeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCChangeOperation.swift; sourceTree = "<group>"; };
 		C91D149A1F5B78FC00210514 /* CCControllerDelegateCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegateCollectionView.swift; sourceTree = "<group>"; };
 		C91D149C1F5B7EF500210514 /* CCGroupable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCGroupable.swift; sourceTree = "<group>"; };
+		C91DB2271F65FFE8004AB57D /* CCUpdateMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCUpdateMapping.swift; sourceTree = "<group>"; };
 		C92BC6E01F51AAED00B2315F /* CCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCManager.swift; sourceTree = "<group>"; };
 		C92BC6F01F51B91F00B2315F /* CCCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCCachable.swift; sourceTree = "<group>"; };
 		C92FAC651F5B26CE0020EC7A /* CCObserveable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCObserveable.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 			children = (
 				C9AE7D861F5AD1F800DC0CE1 /* CCPath.swift */,
 				C9AE7D841F5AD1F200DC0CE1 /* CCFilterMapping.swift */,
+				C91DB2271F65FFE8004AB57D /* CCUpdateMapping.swift */,
 				C96632801F617398006922C0 /* CCContainer.swift */,
 				C9AE7D881F5AD1FE00DC0CE1 /* CCSortOrder.swift */,
 			);
@@ -507,6 +510,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9AE7D891F5AD1FE00DC0CE1 /* CCSortOrder.swift in Sources */,
+				C91DB2281F65FFE8004AB57D /* CCUpdateMapping.swift in Sources */,
 				C96632811F617398006922C0 /* CCContainer.swift in Sources */,
 				C92FAC661F5B26CE0020EC7A /* CCObserveable.swift in Sources */,
 				C9C6F8191F5B3AA900BF460B /* CCControllerDelegate.swift in Sources */,

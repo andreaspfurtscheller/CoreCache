@@ -20,21 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import CoreData
+import Foundation
 
-public protocol CCUpdateable {
+public protocol CCUpdateMapping {
     
-    associatedtype Updater: CCUpdateMapping
+    func update()
     
 }
-
-extension CCUpdateable where Self: CCManaged {
-    
-    @discardableResult
-    public func update(_ property: Updater) -> Self {
-        property.update()
-        return self
-    }
-    
-}
-
