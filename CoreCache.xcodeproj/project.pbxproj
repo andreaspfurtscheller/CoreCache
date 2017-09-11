@@ -36,6 +36,8 @@
 		C96632821F618384006922C0 /* CCCache.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C90C87351F4751EC00E5BE6E /* CCCache.xcdatamodeld */; };
 		C9940A3F1F5A633D0047A26F /* CCUpdateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */; };
 		C9989EC01F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9989EBF1F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift */; };
+		C99DCC821F66242500CAE5EA /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DCC811F66242500CAE5EA /* Set.swift */; };
+		C99DCC841F6626CB00CAE5EA /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DCC831F6626CB00CAE5EA /* Array.swift */; };
 		C9AE7D831F5A683C00DC0CE1 /* CCGarbageCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE7D821F5A683C00DC0CE1 /* CCGarbageCollector.swift */; };
 		C9AE7D851F5AD1F200DC0CE1 /* CCFilterMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE7D841F5AD1F200DC0CE1 /* CCFilterMapping.swift */; };
 		C9AE7D871F5AD1F800DC0CE1 /* CCPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE7D861F5AD1F800DC0CE1 /* CCPath.swift */; };
@@ -94,6 +96,8 @@
 		C96632801F617398006922C0 /* CCContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCContainer.swift; sourceTree = "<group>"; };
 		C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCUpdateable.swift; sourceTree = "<group>"; };
 		C9989EBF1F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegateCollectionViewDelegate.swift; sourceTree = "<group>"; };
+		C99DCC811F66242500CAE5EA /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
+		C99DCC831F6626CB00CAE5EA /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		C9AE7D821F5A683C00DC0CE1 /* CCGarbageCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCGarbageCollector.swift; sourceTree = "<group>"; };
 		C9AE7D841F5AD1F200DC0CE1 /* CCFilterMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCFilterMapping.swift; sourceTree = "<group>"; };
 		C9AE7D861F5AD1F800DC0CE1 /* CCPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCPath.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 				C92FAC671F5B26F80020EC7A /* UtilityProtocols */,
 				C92FAC681F5B27150020EC7A /* ImageCache */,
 				C92FAC6C1F5B28320020EC7A /* Others */,
+				C99DCC801F66241900CAE5EA /* Extensions */,
 				C90C872B1F474E0900E5BE6E /* CoreCache.h */,
 				C90C872C1F474E0900E5BE6E /* Info.plist */,
 			);
@@ -288,6 +293,15 @@
 				C90C873C1F47649800E5BE6E /* CCErrorNotification.swift */,
 			);
 			path = Others;
+			sourceTree = "<group>";
+		};
+		C99DCC801F66241900CAE5EA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C99DCC811F66242500CAE5EA /* Set.swift */,
+				C99DCC831F6626CB00CAE5EA /* Array.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C9AE7DA01F5AE09200DC0CE1 /* CoreCacheTests */ = {
@@ -518,6 +532,7 @@
 				C931CB791F5A4BB100D4AD88 /* CCFilterable.swift in Sources */,
 				C931CB771F5A4BA800D4AD88 /* CCSortable.swift in Sources */,
 				C9AE7D871F5AD1F800DC0CE1 /* CCPath.swift in Sources */,
+				C99DCC841F6626CB00CAE5EA /* Array.swift in Sources */,
 				C931CB731F59D73700D4AD88 /* CCAlamofireFetcher.swift in Sources */,
 				C9027FFB1F5704C3006EC40C /* CCImageDataManager.swift in Sources */,
 				C90C873D1F47649800E5BE6E /* CCErrorNotification.swift in Sources */,
@@ -531,6 +546,7 @@
 				C9940A3F1F5A633D0047A26F /* CCUpdateable.swift in Sources */,
 				C9D2D4501F5B3F1900CB2334 /* CCDiscardable.swift in Sources */,
 				C9F756571F5B2E110073342E /* CCModel.swift in Sources */,
+				C99DCC821F66242500CAE5EA /* Set.swift in Sources */,
 				C92FAC6E1F5B28840020EC7A /* CCContext.swift in Sources */,
 				C9F756591F5B2F910073342E /* CCStore.swift in Sources */,
 				C90C87371F4751EC00E5BE6E /* CCCache.xcdatamodeld in Sources */,
