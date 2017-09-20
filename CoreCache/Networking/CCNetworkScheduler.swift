@@ -26,6 +26,13 @@ import WebParsing
 
 open class CCNetworkScheduler {
     
+    #if DEBUG
+        public var printsOutgoingData = true
+        public var printsIncomingData = true
+        public var printsBandwidth = false
+        public var printsEstimatedTraffic = false
+    #endif
+    
     public enum RequestPriority {
         case low
         case normal
@@ -103,43 +110,42 @@ open class CCNetworkScheduler {
     public func request<Operation: CCNetworkOperation>(_ operation: Operation, priority: RequestPriority = .required,
                                                        progressHandler: @escaping (Int) -> Void = { _ in return }) -> CPPromise<Operation.ResultType> {
         return CPPromise { resolve, reject in
-            self.lockingQueue.async {
-                let request = self.createRequest(from: operation)
-                request.downloadProgress { progress in
-                    progressHandler(Int(progress.fractionCompleted * 100))
+            let request = self.createRequest(from: operation)
+            request.downloadProgress { progress in
+                progressHandler(Int(progress.fractionCompleted * 100))
+            }
+            #if DEBUG
+                if self.printsIncomingData {
+                    request.print()
                 }
-                request.responseData { response in
-                    switch response.result {
-                    case .success(let data):
-                        self.lockingQueue.async {
-                            self.didFinish(String(describing: Operation.self), bytes: data.count)
-                            self.currentBandwidth = Double(data.count) / (response.timeline.requestDuration -
-                                                                          response.timeline.latency)
-                            #if DEBUG
+            #endif
+            request.responseData { response in
+                switch response.result {
+                case .success(let data):
+                    self.lockingQueue.async {
+                        self.didFinish(String(describing: Operation.self), bytes: data.count)
+                        self.currentBandwidth = Double(data.count) / (response.timeline.requestDuration -
+                            response.timeline.latency)
+                        #if DEBUG
+                            if self.printsBandwidth {
                                 print("Request '\(String(describing: Operation.self))' did finish.")
                                 print("Current bandwidth is \(self.currentBandwidth) bytes per second.")
-                            #endif
-                        }
-                        self.performRequests()
-                        do {
-                            if let statusCode = response.response?.statusCode, (200...299).contains(statusCode) {
-                                resolve(try operation.parse(using: data))
-                            } else {
-                                reject(self.parseError(using: data))
                             }
-                        } catch let error {
-                            reject(error)
-                        }
-                    case .failure(let error):
-                        self.performRequests()
-                        reject(error)
+                        #endif
                     }
+                    self.performRequests()
+                case .failure(let error):
+                    self.performRequests()
+                    reject(error)
                 }
+            }
+            self.lockingQueue.async {
                 let stalledRequest = StalledRequest(request, priority: priority, identifier: String(describing: Operation.self))
                 self.stalledRequests.insert(stalledRequest)
                 self.performRequests()
             }
-        }
+            resolve(request)
+        }.then { request in operation.serialize(request) }
     }
     
     open func parseError(using data: Data) -> Error {
@@ -160,7 +166,15 @@ open class CCNetworkScheduler {
     @discardableResult
     private func resumeRequest(_ request: StalledRequest) -> ActiveRequest {
         #if DEBUG
-            print("Request '\(request.identifier)' did start.")
+            if self.printsOutgoingData {
+                print("+++ Request '\(request.identifier)' did start.")
+                print("\tURL: '\(request.request.request?.url?.absoluteString ?? "<unspecified>")'")
+                if let body = request.request.request?.httpBody, let string = String(data: body, encoding: .utf8) {
+                    print("\tHTTP Body: \(string)")
+                } else {
+                    print("\tHTTP Body: <unspecified>")
+                }
+            }
         #endif
         request.request.resume()
         self.stalledRequests.remove(request)
@@ -172,12 +186,16 @@ open class CCNetworkScheduler {
         if let count = self.statusInformation[request]["count"].intValue,
             let bytes = self.statusInformation[request]["bytes"].intValue {
             #if DEBUG
-                print("Estimated traffic for request '\(request)' is \(bytes / count) bytes.")
+                if self.printsEstimatedTraffic {
+                    print("Estimated traffic for request '\(request)' is \(bytes / count) bytes.")
+                }
             #endif
             return bytes / count
         }
         #if DEBUG
-            print("Estimated traffic for request '\(request)' is currently unknown.")
+            if self.printsEstimatedTraffic {
+                print("Estimated traffic for request '\(request)' is currently unknown.")
+            }
         #endif
         return 1024
     }
@@ -221,7 +239,7 @@ open class CCNetworkScheduler {
     }
     
     deinit {
-        try? statusInformation.data().write(to: self.statusInformationUrl)
+        try? statusInformation.data()?.write(to: self.statusInformationUrl)
     }
     
 }

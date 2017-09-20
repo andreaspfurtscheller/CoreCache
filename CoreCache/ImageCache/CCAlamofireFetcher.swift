@@ -35,9 +35,9 @@ public final class CCAlamofireFetcher: CCImageFetching {
             Alamofire.request(url).responseImage { response in
                 do {
                     if let data = response.data {
-                        resolve(try some(UIImage(data: data)))
+                        resolve(try UIImage(data: data).unwrap())
                     } else {
-                        reject(try some(response.error))
+                        reject(try response.error.unwrap())
                     }
                 } catch let error {
                     reject(error)

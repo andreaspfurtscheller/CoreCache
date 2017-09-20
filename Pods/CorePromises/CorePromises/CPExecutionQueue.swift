@@ -28,7 +28,7 @@ public protocol CPExecutionQueue {
     
     /// Executes the given closure according to the implementation. It is advisable to perform execution
     /// asynchronously to mimic the Promises' desired behavior.
-    /// Most of the time, `DispatchQueue` and `CCTransientQueue` should be sufficient.
+    /// Most of the time, `DispatchQueue` and `CPTransientQueue` should be sufficient.
     ///
     /// - Parameter work: The closure to execute.
     func execute(work: @escaping () -> Void)

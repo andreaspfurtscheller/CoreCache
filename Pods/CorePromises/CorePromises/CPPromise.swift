@@ -163,15 +163,27 @@ public final class CPPromise<ResultType> {
     /// - Parameters:
     ///   - executionQueue: The queue to execute the given handler. The default is set to `DispatchQueue.main`.
     ///   - onRejected:     The error handler to execute with the error that caused the promise to be rejected. The
-    ///                     handler may not return any value.
+    ///                     handler may not return any value. However, it may convert the error it was handed by
+    ///                     throwing a different error that is received by the subsequent error handler. If it does not
+    ///                     throw an error, the subsequent error handler is handed the exact same error.
     /// - Returns: The same promise as `self`, associated with the given error handler.
     @discardableResult
     public func `catch`(on executionQueue: CPExecutionQueue = DispatchQueue.main,
-                        _ onRejected: @escaping (Error) -> Void) -> CPPromise<ResultType> {
-        let callback = CPPromiseCallback<ResultType>(executionQueue: executionQueue, onFulfilled: { _ in return },
-                                                     onRejected: { error in onRejected(error) })
-        self.addCallback(callback)
-        return self
+                        _ onRejected: @escaping (Error) throws -> Void) -> CPPromise<ResultType> {
+        return CPPromise<ResultType> { resolve, reject in
+            let handler = { (error: Error) in
+                do {
+                    try onRejected(error)
+                    reject(error)
+                } catch let err {
+                    reject(err)
+                }
+            }
+            let callback = CPPromiseCallback<ResultType>(executionQueue: executionQueue,
+                                                         onFulfilled: { value in resolve(value) },
+                                                         onRejected: handler)
+            self.addCallback(callback)
+        }
     }
     
     /// Executes the given closure on the given queue as the promise is either resolved or rejected.

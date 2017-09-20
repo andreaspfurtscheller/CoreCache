@@ -2,9 +2,9 @@ PODS:
   - Alamofire (4.5.1)
   - AlamofireImage (3.3.0):
     - Alamofire (~> 4.5)
-  - CorePromises (1.0.0)
-  - CoreUtility (0.2.0)
-  - WebParsing (2.2.1):
+  - CorePromises (1.1.0)
+  - CoreUtility (0.2.3)
+  - WebParsing (3.0.0):
     - Alamofire
     - CorePromises
     - CoreUtility
@@ -19,9 +19,9 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
-  CorePromises: c820b33308207c450ade02bd4205e5fb9a199cfd
-  CoreUtility: 0830460fd2ca67e15be10896baec074cefe8118a
-  WebParsing: 786196c2bf8d674d9b2956cd8f07a9dc26c48632
+  CorePromises: 639785df9e2c072e6d2f9076aae519ea00eb87f0
+  CoreUtility: 625d5144a7270e647e4910d713a5c5ace70a0e07
+  WebParsing: 0518cf110a854aedeb030341698c29341296a022
 
 PODFILE CHECKSUM: 5b126f219282222a0e54290bb976982bb07b9052
 

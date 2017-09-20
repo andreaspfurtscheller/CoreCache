@@ -64,7 +64,7 @@ public final class CCImageCache {
                 backgroundContext.async {
                     do {
                         if let imageObject = CCImage.object(forPrimaryKey: url, in: backgroundContext) {
-                            let image = try some(UIImage(data: imageObject.data))
+                            let image = try UIImage(data: imageObject.data).unwrap()
                             self.cache.setObject(image, forKey: url as NSString)
                             resolve(image)
                             return

@@ -47,7 +47,7 @@ public protocol CCNetworkOperation {
     var requestContent: CCNetworkContent { get }
     var requestHeaders: CCNetworkHeaders { get }
     
-    func parse(using data: Data) throws -> ResultType
+    func serialize(_ request: DataRequest) -> CPPromise<ResultType>
     
 }
 

@@ -9,8 +9,7 @@ CorePromises can be used with CocoaPods: simply add `CorePromises` to your podfi
 ## Documentation
 CorePromises is thoroughly documented:
 
-- All symbols are documented using Swift Doc which has been converted to HTML documentation using [jazzy](https://github.com/realm/jazzy). This documentation is available on [GithubPages](https://borchero.github.io/CorePromises/). Also consider downloading [Dash](https://kapeli.com/dash) which provides searchable documentation for all CocoaPods projects, including CorePromises.
-- A more general documentation will be added in the near future.
+- All symbols are documented using Swift Doc which has been converted to HTML documentation using [jazzy](https://github.com/realm/jazzy). This documentation is available on [GithubPages](https://borchero.github.io/CorePromises/). Also consider downloading [Dash](https://kapeli.com/dash): on the `gh-pages` branch, download the `CorePromises.tgz` file in the `docsets` folder.
 
 Feel free to file bug reports if you feel that something is not documented thoroughly enough.
 

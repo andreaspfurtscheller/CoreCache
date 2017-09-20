@@ -27,6 +27,7 @@ import Foundation
 ///
 /// - Throws: In case the given value does not wrap a value.
 /// - Returns: An unwrapped value in case the given optional was wrapping a value.
+@available(*, deprecated, message: "Use `some` function on the optional directly.")
 @inline(__always)
 public func some<T>(_ value: T?) throws -> T {
     switch value {
