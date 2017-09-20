@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import CoreCache
 
 class CoreCacheTests: XCTestCase {
     

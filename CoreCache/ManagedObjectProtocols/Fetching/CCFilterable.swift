@@ -41,7 +41,7 @@ extension CCRequest where ResultType: CCFilterable {
     ///               `equal`.
     /// - Returns: The modified request that only includes values 
     public func filtered(by filter: ResultType.Filter) -> CCRequest<ResultType> {
-        return filterBy(predicate: filter.predicate)
+        return filterBy(predicate: filter.predicate.predicate)
     }
     
 }

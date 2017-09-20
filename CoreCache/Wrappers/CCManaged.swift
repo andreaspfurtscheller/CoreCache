@@ -27,10 +27,6 @@ import CoreData
 /// The class does not provide any public initializers. Call `Self.create` or similar methods to obtain an instance.
 open class CCManaged: NSManagedObject, CCManageable {
     
-    internal override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertInto: context)
-    }
-    
     /// The default implementation of the main context returns the `CCManager.default.context`.
     public static var mainContext: CCContext {
         return CCManager.default.context

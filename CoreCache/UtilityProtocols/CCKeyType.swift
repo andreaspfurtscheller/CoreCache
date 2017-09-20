@@ -22,19 +22,38 @@
 
 import Foundation
 
-extension Set where Element: CCFilterable {
+public protocol CCKeyType {
     
-    public func filtered(by filter: Element.Filter) -> Set<Element> {
-        return (self as NSSet).filtered(using: filter.predicate.predicate) as! Set<Element>
-    }
+    var argsIdentifier: String { get }
     
 }
 
-extension Set where Element: CCSortable {
-    
-    public func sorted(by sortPath: Element.SortPath, _ sortOrder: CCSortOrder) -> [Element] {
-        let sortDescriptor = NSSortDescriptor(key: sortPath.rawValue, ascending: sortOrder.isAscending)
-        return (self as NSSet).sortedArray(using: [sortDescriptor]) as! [Element]
+extension String: CCKeyType {
+    public var argsIdentifier: String {
+        return "%@"
     }
-    
+}
+
+extension Int64: CCKeyType {
+    public var argsIdentifier: String {
+        return "%ld"
+    }
+}
+
+extension Int32: CCKeyType {
+    public var argsIdentifier: String {
+        return "%d"
+    }
+}
+
+extension Int16: CCKeyType {
+    public var argsIdentifier: String {
+        return "%d"
+    }
+}
+
+extension UUID: CCKeyType, CVarArg {
+    public var argsIdentifier: String {
+        return "%@"
+    }
 }

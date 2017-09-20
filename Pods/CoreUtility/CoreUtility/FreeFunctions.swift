@@ -36,3 +36,38 @@ public func some<T>(_ value: T?) throws -> T {
         return value
     }
 }
+
+/// Rounds an integer to the next number x that is greater
+/// or equal than `arg` and divideable by `to`.
+///
+/// - Parameters:
+///   - arg: The value to round.
+///   - to: The value to round up to. Needs to be greater 0.
+/// - Returns: The round up value.
+public func ceil(_ arg: Int, to: Int) -> Int {
+    assert(to > 0)
+    if arg < 0 {
+        return -floor(-arg, to: to)
+    }
+    let modulo = arg % to
+    if modulo == 0 {
+        return arg
+    }
+    return arg + to - modulo
+}
+
+/// Rounds an integer to the next number x that is smaller
+/// or equal than `arg` and divideable by `to`.
+///
+/// - Parameters:
+///   - arg: The value to round.
+///   - to: The value to round up down. Needs to be greater 0.
+/// - Returns: The round down value.
+public func floor(_ arg: Int, to: Int) -> Int {
+    assert(to > 0)
+    if arg < 0 {
+        return -ceil(-arg, to: to)
+    }
+    let modulo = arg % to
+    return arg - modulo
+}

@@ -32,6 +32,10 @@
 		C931CB771F5A4BA800D4AD88 /* CCSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C931CB761F5A4BA800D4AD88 /* CCSortable.swift */; };
 		C931CB791F5A4BB100D4AD88 /* CCFilterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C931CB781F5A4BB100D4AD88 /* CCFilterable.swift */; };
 		C95133311F5A57D800683BC1 /* CCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95133301F5A57D800683BC1 /* CCRequest.swift */; };
+		C956874E1F6AB24C00CE98E5 /* CCNetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C956874D1F6AB24C00CE98E5 /* CCNetworkOperation.swift */; };
+		C95687501F6AB44500CE98E5 /* CCNetworkScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C956874F1F6AB44500CE98E5 /* CCNetworkScheduler.swift */; };
+		C95687581F6B157000CE98E5 /* CCNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95687571F6B157000CE98E5 /* CCNetworkError.swift */; };
+		C956875C1F6B5A6C00CE98E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C956875B1F6B5A6C00CE98E5 /* Data.swift */; };
 		C96632811F617398006922C0 /* CCContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96632801F617398006922C0 /* CCContainer.swift */; };
 		C96632821F618384006922C0 /* CCCache.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C90C87351F4751EC00E5BE6E /* CCCache.xcdatamodeld */; };
 		C9940A3F1F5A633D0047A26F /* CCUpdateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */; };
@@ -44,6 +48,8 @@
 		C9AE7D891F5AD1FE00DC0CE1 /* CCSortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE7D881F5AD1FE00DC0CE1 /* CCSortOrder.swift */; };
 		C9AE7DA21F5AE09200DC0CE1 /* CoreCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE7DA11F5AE09200DC0CE1 /* CoreCacheTests.swift */; };
 		C9AE7DA41F5AE09200DC0CE1 /* CoreCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90C87281F474E0900E5BE6E /* CoreCache.framework */; };
+		C9B1C4D61F726E9D006138E3 /* CCPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1C4D51F726E9D006138E3 /* CCPredicate.swift */; };
+		C9B1C4D81F727135006138E3 /* CCKeyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1C4D71F727135006138E3 /* CCKeyType.swift */; };
 		C9C6F8191F5B3AA900BF460B /* CCControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C6F8181F5B3AA900BF460B /* CCControllerDelegate.swift */; };
 		C9D2D4501F5B3F1900CB2334 /* CCDiscardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D2D44F1F5B3F1900CB2334 /* CCDiscardable.swift */; };
 		C9D2D4521F5B43B900CB2334 /* CCManaged.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D2D4511F5B43B900CB2334 /* CCManaged.swift */; };
@@ -93,6 +99,10 @@
 		C931CB761F5A4BA800D4AD88 /* CCSortable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCSortable.swift; sourceTree = "<group>"; };
 		C931CB781F5A4BB100D4AD88 /* CCFilterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCFilterable.swift; sourceTree = "<group>"; };
 		C95133301F5A57D800683BC1 /* CCRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCRequest.swift; sourceTree = "<group>"; };
+		C956874D1F6AB24C00CE98E5 /* CCNetworkOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNetworkOperation.swift; sourceTree = "<group>"; };
+		C956874F1F6AB44500CE98E5 /* CCNetworkScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNetworkScheduler.swift; sourceTree = "<group>"; };
+		C95687571F6B157000CE98E5 /* CCNetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNetworkError.swift; sourceTree = "<group>"; };
+		C956875B1F6B5A6C00CE98E5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		C96632801F617398006922C0 /* CCContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCContainer.swift; sourceTree = "<group>"; };
 		C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCUpdateable.swift; sourceTree = "<group>"; };
 		C9989EBF1F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegateCollectionViewDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +115,8 @@
 		C9AE7D9F1F5AE09200DC0CE1 /* CoreCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AE7DA11F5AE09200DC0CE1 /* CoreCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCacheTests.swift; sourceTree = "<group>"; };
 		C9AE7DA31F5AE09200DC0CE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9B1C4D51F726E9D006138E3 /* CCPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCPredicate.swift; sourceTree = "<group>"; };
+		C9B1C4D71F727135006138E3 /* CCKeyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCKeyType.swift; sourceTree = "<group>"; };
 		C9C6F8181F5B3AA900BF460B /* CCControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegate.swift; sourceTree = "<group>"; };
 		C9D2D44F1F5B3F1900CB2334 /* CCDiscardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCDiscardable.swift; sourceTree = "<group>"; };
 		C9D2D4511F5B43B900CB2334 /* CCManaged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCManaged.swift; sourceTree = "<group>"; };
@@ -184,6 +196,7 @@
 				C92FAC641F5B26B70020EC7A /* ManagedObjectProtocols */,
 				C92FAC671F5B26F80020EC7A /* UtilityProtocols */,
 				C92FAC681F5B27150020EC7A /* ImageCache */,
+				C956873C1F6AB10100CE98E5 /* Networking */,
 				C92FAC6C1F5B28320020EC7A /* Others */,
 				C99DCC801F66241900CAE5EA /* Extensions */,
 				C90C872B1F474E0900E5BE6E /* CoreCache.h */,
@@ -251,6 +264,7 @@
 			children = (
 				C9AE7D861F5AD1F800DC0CE1 /* CCPath.swift */,
 				C9AE7D841F5AD1F200DC0CE1 /* CCFilterMapping.swift */,
+				C9B1C4D71F727135006138E3 /* CCKeyType.swift */,
 				C91DB2271F65FFE8004AB57D /* CCUpdateMapping.swift */,
 				C96632801F617398006922C0 /* CCContainer.swift */,
 				C9AE7D881F5AD1FE00DC0CE1 /* CCSortOrder.swift */,
@@ -274,6 +288,7 @@
 		C92FAC6A1F5B27C00020EC7A /* Wrappers */ = {
 			isa = PBXGroup;
 			children = (
+				C9B1C4D51F726E9D006138E3 /* CCPredicate.swift */,
 				C92BC6E01F51AAED00B2315F /* CCManager.swift */,
 				C9F756561F5B2E110073342E /* CCModel.swift */,
 				C9F756581F5B2F910073342E /* CCStore.swift */,
@@ -295,11 +310,22 @@
 			path = Others;
 			sourceTree = "<group>";
 		};
+		C956873C1F6AB10100CE98E5 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				C956874F1F6AB44500CE98E5 /* CCNetworkScheduler.swift */,
+				C956874D1F6AB24C00CE98E5 /* CCNetworkOperation.swift */,
+				C95687571F6B157000CE98E5 /* CCNetworkError.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		C99DCC801F66241900CAE5EA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				C99DCC811F66242500CAE5EA /* Set.swift */,
 				C99DCC831F6626CB00CAE5EA /* Array.swift */,
+				C956875B1F6B5A6C00CE98E5 /* Data.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -503,6 +529,7 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePromises/CorePromises.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreUtility/CoreUtility.framework",
+				"${BUILT_PRODUCTS_DIR}/WebParsing/WebParsing.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -510,6 +537,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreUtility.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebParsing.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -530,11 +558,13 @@
 				C9C6F8191F5B3AA900BF460B /* CCControllerDelegate.swift in Sources */,
 				C91D14991F5B68F700210514 /* CCChangeOperation.swift in Sources */,
 				C931CB791F5A4BB100D4AD88 /* CCFilterable.swift in Sources */,
+				C956875C1F6B5A6C00CE98E5 /* Data.swift in Sources */,
 				C931CB771F5A4BA800D4AD88 /* CCSortable.swift in Sources */,
 				C9AE7D871F5AD1F800DC0CE1 /* CCPath.swift in Sources */,
 				C99DCC841F6626CB00CAE5EA /* Array.swift in Sources */,
 				C931CB731F59D73700D4AD88 /* CCAlamofireFetcher.swift in Sources */,
 				C9027FFB1F5704C3006EC40C /* CCImageDataManager.swift in Sources */,
+				C95687581F6B157000CE98E5 /* CCNetworkError.swift in Sources */,
 				C90C873D1F47649800E5BE6E /* CCErrorNotification.swift in Sources */,
 				C9D2D4521F5B43B900CB2334 /* CCManaged.swift in Sources */,
 				C92FAC701F5B28A60020EC7A /* CCController.swift in Sources */,
@@ -542,6 +572,7 @@
 				C91D149B1F5B78FC00210514 /* CCControllerDelegateCollectionView.swift in Sources */,
 				C91D149D1F5B7EF500210514 /* CCGroupable.swift in Sources */,
 				C91D14951F5B61AC00210514 /* CCControllerDelegateTableView.swift in Sources */,
+				C956874E1F6AB24C00CE98E5 /* CCNetworkOperation.swift in Sources */,
 				C9989EC01F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift in Sources */,
 				C9940A3F1F5A633D0047A26F /* CCUpdateable.swift in Sources */,
 				C9D2D4501F5B3F1900CB2334 /* CCDiscardable.swift in Sources */,
@@ -549,7 +580,9 @@
 				C99DCC821F66242500CAE5EA /* Set.swift in Sources */,
 				C92FAC6E1F5B28840020EC7A /* CCContext.swift in Sources */,
 				C9F756591F5B2F910073342E /* CCStore.swift in Sources */,
+				C9B1C4D61F726E9D006138E3 /* CCPredicate.swift in Sources */,
 				C90C87371F4751EC00E5BE6E /* CCCache.xcdatamodeld in Sources */,
+				C9B1C4D81F727135006138E3 /* CCKeyType.swift in Sources */,
 				C9F756551F5B2C990073342E /* CCManageable.swift in Sources */,
 				C90C87341F474F0900E5BE6E /* CCImage.swift in Sources */,
 				C9158F891F5C727C00CB1043 /* CCUtility.swift in Sources */,
@@ -560,6 +593,7 @@
 				C95133311F5A57D800683BC1 /* CCRequest.swift in Sources */,
 				C92BC6E11F51AAED00B2315F /* CCManager.swift in Sources */,
 				C909F3F71F536D7D002B9D34 /* CCImageCache.swift in Sources */,
+				C95687501F6AB44500CE98E5 /* CCNetworkScheduler.swift in Sources */,
 				C916F4F11F5CA4B400F5EA4B /* CCControllerDelegateTableViewDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

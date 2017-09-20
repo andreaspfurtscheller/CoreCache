@@ -87,12 +87,11 @@ public final class CCRequest<ResultType: NSManagedObject & CCManageable> {
         return self
     }
     
-    internal func filterBy(predicate: String) -> CCRequest<ResultType> {
-        let newPredicate = NSPredicate(format: predicate)
+    internal func filterBy(predicate: NSPredicate) -> CCRequest<ResultType> {
         if let oldPredicate = fetchRequest.predicate {
-            fetchRequest.predicate = NSCompoundPredicate(type: .and, subpredicates: [oldPredicate, newPredicate])
+            fetchRequest.predicate = NSCompoundPredicate(type: .and, subpredicates: [oldPredicate, predicate])
         } else {
-            fetchRequest.predicate = newPredicate
+            fetchRequest.predicate = predicate
         }
         return self
     }

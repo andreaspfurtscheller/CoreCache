@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = 'CoreCache'
-  s.version          = '0.1.7'
+  s.version          = '0.2.0'
   s.summary          = 'CoreCache provides a leightweight wrapper for Apple\'s complex CoreData
                         framework.'
 
@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   s.dependency 'Alamofire'
   s.dependency 'AlamofireImage'
   s.dependency 'CoreUtility'
+  s.dependency 'WebParsing'
 
   s.resources = ['CoreCache/ImageCache/CCCache.xcdatamodeld',
                  'CoreCache/ImageCache/CCCache.xcdatamodeld/Cache.xcdatamodel',

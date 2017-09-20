@@ -28,7 +28,7 @@ import CoreData
 public protocol CCIndexable: CCManageable {
     
     /// The type of the primary key. The default is set to `String`.
-    associatedtype PrimaryKeyType
+    associatedtype PrimaryKeyType: CCKeyType
     
     /// The key path for the primary key. The default is set to `cd_id`.
     static var primaryKeyPath: String { get }
@@ -37,7 +37,7 @@ public protocol CCIndexable: CCManageable {
 
 public extension CCIndexable {
     
-    public typealias PrimaryKeyPath = String
+    public typealias PrimaryKeyType = String
     
     public static var primaryKeyPath: String {
         return "cd_id"
@@ -57,7 +57,8 @@ extension CCIndexable where Self: CCManaged {
     ///            object for the specified primary key.
     public static func object(forPrimaryKey key: PrimaryKeyType,
                               in context: CCContext = CCManager.default.context) -> Self? {
-        return request().filterBy(predicate: "\(primaryKeyPath) == \(key)").fetch(in: context).first
+        return request().filterBy(predicate: NSPredicate(format: "\(primaryKeyPath) == \(PrimaryKeyType.argsIdentifier)",
+                                                         key)).fetch(in: context).first
     }
     
     /// Creates or fetches the object for the specified primary key in the given context.

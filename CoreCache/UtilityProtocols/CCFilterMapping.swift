@@ -24,6 +24,6 @@ import Foundation
 
 public protocol CCFilterMapping {
     
-    var predicate: String { get }
+    var predicate: CCPredicate { get }
     
 }

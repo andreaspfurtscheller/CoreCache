@@ -25,7 +25,7 @@ import UIKit
 /// A delegate implementation for the `CCControllerDelegate` used for table views.
 /// A `CCControllerDelegateTableView` is always associated with a single table view and a delegate for configuring
 /// a table view cell.
-open class CCControllerDelagateTableView: CCControllerDelegate {
+open class CCControllerDelegateTableView: CCControllerDelegate {
     
     private var tableView: UITableView
     private unowned let delegate: CCControllerDelegateTableViewDelegate

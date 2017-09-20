@@ -25,8 +25,7 @@ import Foundation
 extension Array where Element: CCFilterable {
     
     public func filtered(by filter: Element.Filter) -> [Element] {
-        let predicate = NSPredicate(format: filter.predicate)
-        return (self as NSArray).filtered(using: predicate) as! [Element]
+        return (self as NSArray).filtered(using: filter.predicate.predicate) as! [Element]
     }
     
 }

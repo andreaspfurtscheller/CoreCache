@@ -8,7 +8,8 @@ target 'CoreCache' do
   pod 'CorePromises'
   pod 'Alamofire'
   pod 'AlamofireImage'
-  pod 'CoreUtility' 
+  pod 'CoreUtility'
+  pod 'WebParsing'
 
   target 'CoreCacheTests' do
     inherit! :search_paths

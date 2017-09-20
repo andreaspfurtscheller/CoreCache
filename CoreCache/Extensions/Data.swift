@@ -22,19 +22,12 @@
 
 import Foundation
 
-extension Set where Element: CCFilterable {
+extension Data {
     
-    public func filtered(by filter: Element.Filter) -> Set<Element> {
-        return (self as NSSet).filtered(using: filter.predicate.predicate) as! Set<Element>
-    }
-    
-}
-
-extension Set where Element: CCSortable {
-    
-    public func sorted(by sortPath: Element.SortPath, _ sortOrder: CCSortOrder) -> [Element] {
-        let sortDescriptor = NSSortDescriptor(key: sortPath.rawValue, ascending: sortOrder.isAscending)
-        return (self as NSSet).sortedArray(using: [sortDescriptor]) as! [Element]
+    public func decodeJson<T: Decodable>(dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .millisecondsSince1970) throws -> T {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = dateDecodingStrategy
+        return try decoder.decode(T.self, from: self)
     }
     
 }
