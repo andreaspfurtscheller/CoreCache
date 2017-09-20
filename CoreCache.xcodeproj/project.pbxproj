@@ -36,7 +36,6 @@
 		C95687501F6AB44500CE98E5 /* CCNetworkScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C956874F1F6AB44500CE98E5 /* CCNetworkScheduler.swift */; };
 		C95687581F6B157000CE98E5 /* CCNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95687571F6B157000CE98E5 /* CCNetworkError.swift */; };
 		C956875C1F6B5A6C00CE98E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C956875B1F6B5A6C00CE98E5 /* Data.swift */; };
-		C96632811F617398006922C0 /* CCContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96632801F617398006922C0 /* CCContainer.swift */; };
 		C96632821F618384006922C0 /* CCCache.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C90C87351F4751EC00E5BE6E /* CCCache.xcdatamodeld */; };
 		C9940A3F1F5A633D0047A26F /* CCUpdateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */; };
 		C9989EC01F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9989EBF1F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift */; };
@@ -103,7 +102,6 @@
 		C956874F1F6AB44500CE98E5 /* CCNetworkScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNetworkScheduler.swift; sourceTree = "<group>"; };
 		C95687571F6B157000CE98E5 /* CCNetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNetworkError.swift; sourceTree = "<group>"; };
 		C956875B1F6B5A6C00CE98E5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
-		C96632801F617398006922C0 /* CCContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCContainer.swift; sourceTree = "<group>"; };
 		C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCUpdateable.swift; sourceTree = "<group>"; };
 		C9989EBF1F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegateCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		C99DCC811F66242500CAE5EA /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 				C9AE7D841F5AD1F200DC0CE1 /* CCFilterMapping.swift */,
 				C9B1C4D71F727135006138E3 /* CCKeyType.swift */,
 				C91DB2271F65FFE8004AB57D /* CCUpdateMapping.swift */,
-				C96632801F617398006922C0 /* CCContainer.swift */,
 				C9AE7D881F5AD1FE00DC0CE1 /* CCSortOrder.swift */,
 			);
 			path = UtilityProtocols;
@@ -553,7 +550,6 @@
 			files = (
 				C9AE7D891F5AD1FE00DC0CE1 /* CCSortOrder.swift in Sources */,
 				C91DB2281F65FFE8004AB57D /* CCUpdateMapping.swift in Sources */,
-				C96632811F617398006922C0 /* CCContainer.swift in Sources */,
 				C92FAC661F5B26CE0020EC7A /* CCObserveable.swift in Sources */,
 				C9C6F8191F5B3AA900BF460B /* CCControllerDelegate.swift in Sources */,
 				C91D14991F5B68F700210514 /* CCChangeOperation.swift in Sources */,

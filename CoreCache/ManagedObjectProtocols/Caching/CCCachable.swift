@@ -26,41 +26,15 @@ public protocol CCCachable: CCIndexable {
     
     /// Updates the given object with the values of the given container.
     /// The primary key must not be modified in this method.
-    /// The default implementation does nothing
     ///
     /// - Parameters:
     ///   - container: The container to use for mapping the data.
     ///   - object:    The object to be modified by the container.
-    static func map<Container: CCContainer>(from container: Container, to object: Self)
-                    where Container.PrimaryKeyType == Self.PrimaryKeyType
-    
     static func map<T>(from container: T, to object: Self)
     
 }
 
-public extension CCCachable {
-    
-    static func map<Container: CCContainer>(from container: Container, to object: Self)
-        where Container.PrimaryKeyType == Self.PrimaryKeyType {
-            // do nothing
-    }
-    
-    static func map<T>(from container: T, to object: Self) {
-        // do nothing
-    }
-    
-}
-
 public extension CCCachable where Self: CCManaged {
-    
-    @discardableResult
-    public static func scratch<Container: CCContainer>(with container: Container,
-                                                       in context: CCContext = CCManager.default.context) -> Self
-        where Container.PrimaryKeyType == Self.PrimaryKeyType {
-            let object = Self.createIfNeeded(forPrimaryKey: container.primaryKey, in: context)
-            map(from: container, to: object)
-            return object
-    }
     
     @discardableResult
     public static func scratch<T>(with container: T, primaryKey: PrimaryKeyType,
