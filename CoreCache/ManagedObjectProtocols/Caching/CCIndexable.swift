@@ -57,7 +57,7 @@ extension CCIndexable where Self: CCManaged {
     ///            object for the specified primary key.
     public static func object(forPrimaryKey key: PrimaryKeyType,
                               in context: CCContext = CCManager.default.context) -> Self? {
-        return request().filterBy(predicate: NSPredicate(format: "\(primaryKeyPath) == \(PrimaryKeyType.argsIdentifier)",
+        return request().filterBy(predicate: NSPredicate(format: "\(primaryKeyPath) == \(Self.PrimaryKeyType.argsIdentifier)",
                                                          key)).fetch(in: context).first
     }
     

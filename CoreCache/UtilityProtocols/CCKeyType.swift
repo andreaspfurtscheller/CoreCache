@@ -24,36 +24,36 @@ import Foundation
 
 public protocol CCKeyType {
     
-    var argsIdentifier: String { get }
+    static var argsIdentifier: String { get }
     
 }
 
 extension String: CCKeyType {
-    public var argsIdentifier: String {
+    public static var argsIdentifier: String {
         return "%@"
     }
 }
 
 extension Int64: CCKeyType {
-    public var argsIdentifier: String {
+    public static var argsIdentifier: String {
         return "%ld"
     }
 }
 
 extension Int32: CCKeyType {
-    public var argsIdentifier: String {
+    public static var argsIdentifier: String {
         return "%d"
     }
 }
 
 extension Int16: CCKeyType {
-    public var argsIdentifier: String {
+    public static var argsIdentifier: String {
         return "%d"
     }
 }
 
 extension UUID: CCKeyType, CVarArg {
-    public var argsIdentifier: String {
+    public static var argsIdentifier: String {
         return "%@"
     }
 }
