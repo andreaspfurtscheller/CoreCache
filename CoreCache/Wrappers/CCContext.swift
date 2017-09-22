@@ -45,11 +45,14 @@ public final class CCContext {
     /// - Note: Listen for the `CCErrorNotification.saveDidFail` notification to respond to any errors that may occur
     ///         during the write. There is no possibility to be notified of the exact context in which saving failed.
     public func write() {
-        save()
-        var current = objectContext
-        while let parent = current.parent {
-            CCUtility.save(parent)
-            current = parent
+        write(objectContext)
+    }
+    
+    private func write(_ context: NSManagedObjectContext) {
+        CCUtility.save(context) {
+            if let parent = context.parent {
+                self.write(parent)
+            }
         }
     }
     

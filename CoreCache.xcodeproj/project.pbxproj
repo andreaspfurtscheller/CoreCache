@@ -17,6 +17,7 @@
 		C90C873D1F47649800E5BE6E /* CCErrorNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90C873C1F47649800E5BE6E /* CCErrorNotification.swift */; };
 		C9158F891F5C727C00CB1043 /* CCUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9158F881F5C727C00CB1043 /* CCUtility.swift */; };
 		C916F4F11F5CA4B400F5EA4B /* CCControllerDelegateTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C916F4F01F5CA4B400F5EA4B /* CCControllerDelegateTableViewDelegate.swift */; };
+		C919FF311F75891900E615F4 /* CCDictionaryConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = C919FF301F75891900E615F4 /* CCDictionaryConvertible.swift */; };
 		C91D14951F5B61AC00210514 /* CCControllerDelegateTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91D14941F5B61AC00210514 /* CCControllerDelegateTableView.swift */; };
 		C91D14991F5B68F700210514 /* CCChangeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91D14981F5B68F700210514 /* CCChangeOperation.swift */; };
 		C91D149B1F5B78FC00210514 /* CCControllerDelegateCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91D149A1F5B78FC00210514 /* CCControllerDelegateCollectionView.swift */; };
@@ -83,6 +84,7 @@
 		C90C873C1F47649800E5BE6E /* CCErrorNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCErrorNotification.swift; sourceTree = "<group>"; };
 		C9158F881F5C727C00CB1043 /* CCUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCUtility.swift; sourceTree = "<group>"; };
 		C916F4F01F5CA4B400F5EA4B /* CCControllerDelegateTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegateTableViewDelegate.swift; sourceTree = "<group>"; };
+		C919FF301F75891900E615F4 /* CCDictionaryConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCDictionaryConvertible.swift; sourceTree = "<group>"; };
 		C91D14941F5B61AC00210514 /* CCControllerDelegateTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegateTableView.swift; sourceTree = "<group>"; };
 		C91D14981F5B68F700210514 /* CCChangeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCChangeOperation.swift; sourceTree = "<group>"; };
 		C91D149A1F5B78FC00210514 /* CCControllerDelegateCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegateCollectionView.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 				C956874F1F6AB44500CE98E5 /* CCNetworkScheduler.swift */,
 				C956874D1F6AB24C00CE98E5 /* CCNetworkOperation.swift */,
 				C95687571F6B157000CE98E5 /* CCNetworkError.swift */,
+				C919FF301F75891900E615F4 /* CCDictionaryConvertible.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				C956875C1F6B5A6C00CE98E5 /* Data.swift in Sources */,
 				C931CB771F5A4BA800D4AD88 /* CCSortable.swift in Sources */,
 				C9AE7D871F5AD1F800DC0CE1 /* CCPath.swift in Sources */,
+				C919FF311F75891900E615F4 /* CCDictionaryConvertible.swift in Sources */,
 				C99DCC841F6626CB00CAE5EA /* Array.swift in Sources */,
 				C931CB731F59D73700D4AD88 /* CCAlamofireFetcher.swift in Sources */,
 				C9027FFB1F5704C3006EC40C /* CCImageDataManager.swift in Sources */,

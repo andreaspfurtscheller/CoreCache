@@ -56,7 +56,7 @@ public struct CCStore {
         switch self.type {
         case .sqlite(filename: let filename):
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: self.configuration,
-                                               at: directory.appendingPathExtension(filename + ".sqlite"),
+                                               at: directory.appendingPathComponent(filename + ".sqlite"),
                                                options: options)
         case .binary(filename: let filename):
             try coordinator.addPersistentStore(ofType: NSBinaryStoreType, configurationName: self.configuration,

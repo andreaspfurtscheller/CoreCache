@@ -20,12 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Foundation
+import CoreUtility
 import WebParsing
 
-public enum CCNetworkError: Error {
+public protocol CCDictionaryConvertible {
     
-    case invalidRequestContent
-    case invalidStatusCode(WPJson)
+    func anyDictionary() throws -> [String: Any]
+    
+}
+
+extension Dictionary: CCDictionaryConvertible {
+    
+    public func anyDictionary() throws -> [String : Any] {
+        return try (self as? [String: Any]).unwrap()
+    }
+    
+}
+
+extension WPJson: CCDictionaryConvertible {
     
 }

@@ -22,16 +22,18 @@
 
 import CorePromises
 import Alamofire
+import WebParsing
 
 public typealias CCNetworkUrl = String
 public typealias CCNetworkRoutingPaths = [String]
 public typealias CCNetworkMethod = HTTPMethod
 public typealias CCNetworkEncoding = ParameterEncoding
 public typealias CCNetworkHeaders = HTTPHeaders
+public typealias CCNetworkStatusCodes = CountableClosedRange<Int>
 
 public enum CCNetworkContent {
     
-    case parameters(data: [String: Any], encoding: CCNetworkEncoding)
+    case parameters(data: CCDictionaryConvertible?, encoding: CCNetworkEncoding)
     case data(Data)
     
 }
@@ -47,7 +49,10 @@ public protocol CCNetworkOperation {
     var requestContent: CCNetworkContent { get }
     var requestHeaders: CCNetworkHeaders { get }
     
-    func serialize(_ request: DataRequest) -> CPPromise<ResultType>
+    var validStatusCodes: CCNetworkStatusCodes { get }
+    
+    func process(data: Data) throws -> ResultType
+    func processError(from data: Data) -> Error
     
 }
 
@@ -62,11 +67,19 @@ public extension CCNetworkOperation {
     }
     
     public var requestContent: CCNetworkContent {
-        return .parameters(data: [:], encoding: JSONEncoding.default)
+        return .parameters(data: nil, encoding: JSONEncoding.default)
     }
     
     public var requestHeaders: CCNetworkHeaders {
         return [:]
+    }
+    
+    public var validStatusCodes: CCNetworkStatusCodes {
+        return 200...299
+    }
+    
+    public func processError(from data: Data) -> Error {
+        return CCNetworkError.invalidStatusCode(WPJson(reading: data))
     }
     
     internal var requestUrl: String {

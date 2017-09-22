@@ -54,6 +54,8 @@ open class CCManager {
     private lazy var storeCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.model.objectModel)
         do {
+            try FileManager.default.createDirectory(at: self.persistentStoresUrl,
+                                                    withIntermediateDirectories: true, attributes: nil)
             let options = [NSMigratePersistentStoresAutomaticallyOption: true]
             for store in persistentStores {
                 try store.add(to: coordinator, at: self.persistentStoresUrl, options: options)

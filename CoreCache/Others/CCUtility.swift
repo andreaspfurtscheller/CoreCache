@@ -27,9 +27,9 @@ internal struct CCUtility {
     internal static func postCoreDataNotification(_ notification: CCErrorNotification,
                                                  withError error: NSError) {
         #if DEBUG
-            print("++++++++++ CORE DATA ERROR ++++++++++")
-            print(error)
-            print("++++++++++ END OF ERROR ++++++++++")
+            print("+++ CCManager: Error occurred ...")
+            print("    \(error)")
+            print("+++ ... end of error.")
         #endif
         if error.domain == NSCocoaErrorDomain {
             DispatchQueue.main.async {
@@ -94,11 +94,12 @@ internal struct CCUtility {
     /// - Parameter context: The context to save.
     ///
     /// - Note: Listen to the `saveDidFail` notification to be notified when the save fails.
-    internal static func save(_ context: NSManagedObjectContext) {
+    internal static func save(_ context: NSManagedObjectContext, onFinish: @escaping () -> Void = { return }) {
         context.perform {
             do {
                 if context.hasChanges {
                     try context.save()
+                    onFinish()
                 }
             } catch let error as NSError {
                 CCUtility.postCoreDataNotification(.saveDidFail, withError: error)
