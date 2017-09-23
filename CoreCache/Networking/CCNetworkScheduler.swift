@@ -202,13 +202,13 @@ open class CCNetworkScheduler {
         #if DEBUG
             if self.shouldPrintRequests {
                 print("+++ CCNetworkManager: Request \(request.uniqueIdentifier) did start...")
-                print("    URL: \(request.request.request?.url?.absoluteString ?? "<undefined>")")
-                print("    Method: \(request.request.request?.httpMethod ?? "<undefined>")")
+                print("    URL:       \(request.request.request?.url?.absoluteString ?? "<undefined>")")
+                print("    Method:    \(request.request.request?.httpMethod ?? "<undefined>")")
                 if let headers = request.request.request?.allHTTPHeaderFields {
                     let jsonString = WPJson(headers).description(forOffset: "\t\t", prettyPrinted: true)
                     print("    Headers:\n\(jsonString)")
                 } else {
-                    print("    Headers: <no header fields>")
+                    print("    Headers:   <no header fields>")
                 }
                 if let data = request.request.request?.httpBody {
                     let jsonString = WPJson(reading: data).description(forOffset: "\t\t", prettyPrinted: true)
