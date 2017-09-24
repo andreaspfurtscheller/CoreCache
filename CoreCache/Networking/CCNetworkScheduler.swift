@@ -24,6 +24,7 @@ import CorePromises
 import Alamofire
 import WebParsing
 
+@available(iOS 10.0, *)
 open class CCNetworkScheduler {
     
     #if DEBUG
