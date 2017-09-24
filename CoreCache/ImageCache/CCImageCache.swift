@@ -95,11 +95,12 @@ public final class CCImageCache {
     
     private func setImage(_ image: UIImage, forUrl url: String, on context: CCContext) {
         cache.setObject(image, forKey: url as NSString)
-        let object = CCImage.object(forPrimaryKey: url, in: context)
-        self.size -= object?.size ?? 0
-        let inserted = (object ?? CCImage.create(in: context))
+        if let oldObject = CCImage.object(forPrimaryKey: url, in: context) {
+            self.size -= oldObject.size
+        }
+        let object = CCImage.createIfNeeded(forPrimaryKey: url, in: context)
             .update(.imageData(compression.data(from: image)))
-        self.size += inserted.size
+        self.size += object.size
     }
     
     /// The capacity of the cache in bytes. The capacity is an upper bound for the cache's size.
@@ -174,3 +175,4 @@ public final class CCImageCache {
     }
     
 }
+

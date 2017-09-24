@@ -23,10 +23,11 @@
 import Foundation
 
 internal final class CCImageDataManager: CCManager {
-        
+    
     init(filePath: String) {
-        super.init(from: CCModel("CCCache"), writeTo: [CCStore(.sqlite(filename: filePath))],
+        super.init(from: CCModel("CCCache", bundle: Bundle(for: CCManager.self)), writeTo: [CCStore(.sqlite(filename: filePath))],
                    at: { $0.appendingPathComponent("cccache") })
     }
     
 }
+

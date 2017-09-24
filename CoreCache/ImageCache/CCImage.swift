@@ -27,15 +27,15 @@ import CoreData
 internal final class CCImage: CCManaged {
     
     var data: Data {
-        return cd_image as Data
+        return cd_imageData as Data
     }
     
     var size: Int {
-        return cd_image.length
+        return cd_imageData.length
     }
     
     @NSManaged
-    private var cd_image: NSData
+    private var cd_imageData: NSData
     @NSManaged
     private var cd_lastAccessed: NSDate
     @NSManaged
@@ -79,8 +79,9 @@ extension CCImage: CCUpdateable {
     
     static func update(_ property: CCImage.Updater, on object: CCImage) {
         switch property {
-        case .imageData(let data): object.cd_image = data as NSData
+        case .imageData(let data): object.cd_imageData = data as NSData
         }
     }
     
 }
+
