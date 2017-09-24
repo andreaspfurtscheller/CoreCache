@@ -34,11 +34,11 @@ import Foundation
 /// `CPPromise` is a thread-safe class as it is primarily useful in multi-threaded environments.
 public final class CPPromise<ResultType> {
     
-    internal let lockingQueue = DispatchQueue(label: "", qos: .userInitiated)
+    private let lockingQueue = DispatchQueue(label: "lock", qos: .userInitiated)
     internal var state: CPPromiseState<ResultType> = .pending
     internal lazy var callbacks: [CPPromiseCallback<ResultType>] = []
     internal let executionBlock: (_ fulfill: @escaping (ResultType) -> Void,
-                                  _ reject: @escaping (Error) -> Void) throws -> Void
+    _ reject: @escaping (Error) -> Void) throws -> Void
     
     internal var isFulfilled: Bool {
         if case .fulfilled(_) = self.state {
@@ -84,7 +84,7 @@ public final class CPPromise<ResultType> {
     ///              Calls to one of the closures after one of these has been executed has no effect at all.
     public init(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated),
                 _ execute: @escaping (_ fulfill: @escaping (ResultType) -> Void,
-                                      _ reject: @escaping (Error) -> Void) throws -> Void) {
+        _ reject: @escaping (Error) -> Void) throws -> Void) {
         self.executionBlock = execute
         queue.async {
             do {
@@ -258,24 +258,22 @@ public final class CPPromise<ResultType> {
     }
     
     private func addCallback(_ callback: CPPromiseCallback<ResultType>) {
-        lockingQueue.sync {
+        lockingQueue.async {
             self.callbacks.append(callback)
         }
         fireCallbacksIfNeeded()
     }
     
     private func fireCallbacksIfNeeded() {
-        lockingQueue.sync { [currentValue = self.value] in
+        lockingQueue.async {
             if case .pending = self.state {
                 return
             }
-            self.callbacks.forEach { [currentValue = currentValue] callback in
+            self.callbacks.forEach { callback in
                 switch self.state {
-                case .fulfilled(_):
-                    if let value = currentValue {
-                        callback.executionQueue.execute {
-                            callback.onFulfilled(value)
-                        }
+                case .fulfilled(let value):
+                    callback.executionQueue.execute {
+                        callback.onFulfilled(value)
                     }
                 case .rejected(let error):
                     callback.executionQueue.execute {

@@ -51,15 +51,22 @@ open class CCNetworkScheduler {
     
     private struct StalledRequest: Hashable {
         
+        private static var ids = 0
+        
         let request: DataRequest
         let priority: Int
         let dateAdded: Date
         let identifier: String
-        private let uuid = UUID().uuidString
-        
-        var uniqueIdentifier: String {
-            return identifier + "_" + uuid
-        }
+        #if DEBUG
+            private let id: Int = {
+                StalledRequest.ids += 1
+                return ids - 1
+            }()
+            
+            var uniqueIdentifier: String {
+                return identifier + "_\(id)"
+            }
+        #endif
         
         init(_ request: DataRequest, priority: RequestPriority, identifier: String) {
             self.request = request
@@ -80,7 +87,7 @@ open class CCNetworkScheduler {
     
     private typealias ActiveRequest = String
     
-    static private(set) var `default` = CCNetworkScheduler()
+    public static private(set) var shared = CCNetworkScheduler()
     
     public var httpHeaders: CCNetworkHeaders = SessionManager.defaultHTTPHeaders
     
@@ -88,7 +95,7 @@ open class CCNetworkScheduler {
     private let lockingQueue = DispatchQueue(label: "", qos: .userInitiated)
     
     private lazy var statusInformation: WPJson = {
-        if !FileManager.default.fileExists(atPath: self.statusInformationUrl.absoluteString) {
+        if !FileManager.default.fileExists(atPath: self.statusInformationUrl.path) {
             return WPJson([:])
         }
         return WPJson(readingFrom: self.statusInformationUrl)
@@ -106,12 +113,18 @@ open class CCNetworkScheduler {
     private var currentBandwidth = 1.0 // byte/s
     
     private init() {
-        let configuration = URLSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = httpHeaders
+        configuration.timeoutIntervalForResource = 120
+        configuration.timeoutIntervalForRequest = 30
         sessionManager = SessionManager(configuration: configuration)
         sessionManager.startRequestsImmediately = false
-        sessionManager.session.configuration.timeoutIntervalForResource = 120
-        sessionManager.session.configuration.timeoutIntervalForRequest = 30
+        
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+            DispatchQueue.global(qos: .background).async {
+                try? self.statusInformation.data()?.write(to: self.statusInformationUrl)
+            }
+        }
     }
     
     public func request<Operation: CCNetworkOperation>(_ operation: Operation, priority: RequestPriority = .required,
@@ -122,11 +135,6 @@ open class CCNetworkScheduler {
         request.downloadProgress { progress in
             progressHandler(Int(progress.fractionCompleted * 100))
         }
-        #if DEBUG
-            if self.shouldPrintResponses {
-                request.print()
-            }
-        #endif
         
         let stalledRequest = StalledRequest(request, priority: priority, identifier: String(describing: Operation.self))
         
@@ -134,26 +142,27 @@ open class CCNetworkScheduler {
             self.stalledRequests.insert(stalledRequest)
             self.performRequests()
         }
-        return request.responseData { response in
+        let dataPromise: CPPromise<Data> = request.responseData { response in
             #if DEBUG
                 switch response.result {
                 case .success(let data):
                     if self.shouldPrintResponses {
-                        print("+++ CCNetworkManager: Request \(stalledRequest.uniqueIdentifier) did finish...")
+                        print(">>> CCNetworkManager: Request \(stalledRequest.uniqueIdentifier) did finish...")
                         if let statusCode = response.response?.statusCode {
                             print("    Status code: \(statusCode)")
                         } else {
                             print("    Status code: <undefined>")
                         }
-                        let jsonString = WPJson(reading: data).description(forOffset: "\t\t", prettyPrinted: true)
+                        let jsonString = WPJson(reading: data).description(forOffset: "\t\t", prettyPrinted: true,
+                                                                           truncatesStrings: true)
                         print("    JSON Response:\n\(jsonString)")
-                        print("+++ ... end of response.")
+                        print("<<< ... end of response.")
                     }
                 case .failure(let error):
                     if self.shouldPrintResponses {
-                        print("+++ CCNetworkManager: Request \(stalledRequest.uniqueIdentifier) did finish...")
+                        print(">>> CCNetworkManager: Request \(stalledRequest.uniqueIdentifier) did finish...")
                         print("    FAILURE: \(error)")
-                        print("+++ ... end of response.")
+                        print("<<< ... end of response.")
                     }
                 }
             #endif
@@ -165,9 +174,11 @@ open class CCNetworkScheduler {
                         response.timeline.latency)
                     #if DEBUG
                         if self.shouldPrintBandwidth {
-                            print("+++ CCNetworkManager: Current bandwidth...")
-                            print("    Bytes per second: \(self.currentBandwidth)")
-                            print("+++ ... end of bandwidth.")
+                            print(">>> CCNetworkManager: Current bandwidth...")
+                            print("    Bytes per second:     \(Int(self.currentBandwidth))")
+                            print("    Kilobytes per second: \(Int(self.currentBandwidth / 1_000))")
+                            print("    Megabytes per second: \(Int(self.currentBandwidth / 1_000_000))")
+                            print("<<< ... end of bandwidth.")
                         }
                     #endif
                 }
@@ -181,9 +192,8 @@ open class CCNetworkScheduler {
                 if case WPError.responseError(let data) = error {
                     throw operation.processError(from: data)
                 }
-            }.then { data in
-                try operation.process(data: data)
-        }
+            }
+        return operation.process(data: dataPromise)
     }
     
     private func createRequest<Operation: CCNetworkOperation>(from operation: Operation) throws -> DataRequest {
@@ -201,22 +211,24 @@ open class CCNetworkScheduler {
     private func resumeRequest(_ request: StalledRequest) -> ActiveRequest {
         #if DEBUG
             if self.shouldPrintRequests {
-                print("+++ CCNetworkManager: Request \(request.uniqueIdentifier) did start...")
+                print(">>> CCNetworkManager: Request \(request.uniqueIdentifier) did start...")
                 print("    URL:       \(request.request.request?.url?.absoluteString ?? "<undefined>")")
                 print("    Method:    \(request.request.request?.httpMethod ?? "<undefined>")")
-                if let headers = request.request.request?.allHTTPHeaderFields {
-                    let jsonString = WPJson(headers).description(forOffset: "\t\t", prettyPrinted: true)
+                if let headers = request.request.request?.allHTTPHeaderFields, !headers.isEmpty {
+                    let jsonString = WPJson(headers).description(forOffset: "\t\t", prettyPrinted: true,
+                                                                 truncatesStrings: true)
                     print("    Headers:\n\(jsonString)")
                 } else {
                     print("    Headers:   <no header fields>")
                 }
                 if let data = request.request.request?.httpBody {
-                    let jsonString = WPJson(reading: data).description(forOffset: "\t\t", prettyPrinted: true)
+                    let jsonString = WPJson(reading: data).description(forOffset: "\t\t", prettyPrinted: true,
+                                                                       truncatesStrings: true)
                     print("    JSON Body:\n\(jsonString)")
                 } else {
                     print("    JSON Body: <no JSON body>")
                 }
-                print("+++ ... end of request.")
+                print("<<< ... end of request.")
             }
         #endif
         request.request.resume()
@@ -230,18 +242,20 @@ open class CCNetworkScheduler {
             let bytes = self.statusInformation[request]["bytes"].intValue {
             #if DEBUG
                 if self.shouldPrintEstimatedTraffic {
-                    print("+++ CCNetworkManager: Estimated traffic for request \(request)...")
-                    print("    Bytes: \(bytes / count)")
-                    print("+++ ... end of estimated traffic.")
+                    print(">>> CCNetworkManager: Estimated traffic for request \(request)...")
+                    print("    Bytes:     \(bytes / count)")
+                    print("    Kilobytes: \(Int(bytes / count / 1000))")
+                    print("<<< ... end of estimated traffic.")
                 }
             #endif
             return bytes / count
         }
         #if DEBUG
             if self.shouldPrintEstimatedTraffic {
-                print("+++ CCNetworkManager: Estimated traffic for request \(request)...")
-                print("    Bytes: <unknown>")
-                print("+++ ... end of estimated traffic.")
+                print(">>> CCNetworkManager: Estimated traffic for request \(request)...")
+                print("    Bytes:     <unknown>")
+                print("    Kilobytes: <unknown>")
+                print("<<< ... end of estimated traffic.")
             }
         #endif
         return 1024
@@ -256,7 +270,7 @@ open class CCNetworkScheduler {
         } else {
             self.statusInformation[request] = WPJson([:])
             self.statusInformation[request]["count"] = WPJson(1)
-            self.statusInformation[request]["count"] = WPJson(bytes)
+            self.statusInformation[request]["bytes"] = WPJson(bytes)
         }
         self.performRequests()
     }
@@ -268,7 +282,7 @@ open class CCNetworkScheduler {
                 .map { (request: $0, weighing: $0.priority + Int(30.0 * pow(-$0.dateAdded.timeIntervalSinceNow, 1.5) + 100)) }
             
             let requiredRequests = weighedRequests.filter { $0.weighing >= 5000 }
-            let _ = requiredRequests.map { self.resumeRequest($0.request) }
+            requiredRequests.forEach { self.resumeRequest($0.request) }
             
             var estimatedCurrentTraffic = self.activeRequests.reduce(0) { $0 + self.estimatedTraffic(for: $1) }
             
@@ -284,9 +298,5 @@ open class CCNetworkScheduler {
             }
         }
     }
-    
-    deinit {
-        try? statusInformation.data()?.write(to: self.statusInformationUrl)
-    }
-    
 }
+

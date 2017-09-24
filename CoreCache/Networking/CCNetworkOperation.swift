@@ -51,7 +51,7 @@ public protocol CCNetworkOperation {
     
     var validStatusCodes: CCNetworkStatusCodes { get }
     
-    func process(data: Data) throws -> ResultType
+    func process(data: CPPromise<Data>) -> CPPromise<ResultType>
     func processError(from data: Data) -> Error
     
 }
