@@ -23,20 +23,14 @@
 import CoreUtility
 import WebParsing
 
-public protocol CCDictionaryConvertible {
-    
-    func anyDictionary() throws -> [String: Any]
-    
-}
-
-extension Dictionary: CCDictionaryConvertible {
-    
+extension Dictionary {
     public func anyDictionary() throws -> [String : Any] {
         return try (self as? [String: Any]).unwrap()
     }
-    
 }
 
-extension WPJson: CCDictionaryConvertible {
-    
+extension WPEncodable {
+    public func anyDictionary() throws -> [String: Any] {
+        return try WPJsonEncoder.encodeToDictionary(self)
+    }
 }

@@ -202,8 +202,14 @@ open class CCNetworkScheduler {
     private func createRequest<Operation: CCNetworkOperation>(from operation: Operation) throws -> DataRequest {
         switch operation.requestContent {
         case .parameters(data: let parameters, encoding: let encoding):
+            var dictionary: [String: Any]? = nil
+            if let dict = parameters as? Dictionary<AnyHashable, Any> {
+                dictionary = try dict.anyDictionary()
+            } else {
+                dictionary = try parameters?.anyDictionary()
+            }
             return self.sessionManager.request(operation.requestUrl, method: operation.requestMethod,
-                                               parameters: try parameters?.anyDictionary(), encoding: encoding, headers: operation.requestHeaders)
+                                               parameters: dictionary, encoding: encoding, headers: operation.requestHeaders)
         case .data(let data):
             return self.sessionManager.upload(data, to: operation.requestUrl, method: operation.requestMethod,
                                               headers: operation.requestHeaders)

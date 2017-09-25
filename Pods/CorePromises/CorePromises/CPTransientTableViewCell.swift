@@ -39,3 +39,4 @@ open class CPTransientTableViewCell: UITableViewCell {
     }
     
 }
+

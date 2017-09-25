@@ -285,6 +285,16 @@ public final class CPPromise<ResultType> {
             self.callbacks = []
         }
     }
+}
+
+extension CPPromise {
     
+    /// Returns a void promise that is usually used to notify the caller of a function that a certain operation has
+    /// finished successfully but who is not interested in any return value or there is no return value.
+    ///
+    /// - Returns: The void promise.
+    public func notify() -> CPPromise<Void> {
+        return self.then { _ in return }
+    }
 }
 

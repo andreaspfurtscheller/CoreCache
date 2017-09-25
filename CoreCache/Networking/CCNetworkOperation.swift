@@ -33,7 +33,7 @@ public typealias CCNetworkStatusCodes = CountableClosedRange<Int>
 
 public enum CCNetworkContent {
     
-    case parameters(data: CCDictionaryConvertible?, encoding: CCNetworkEncoding)
+    case parameters(data: WPEncodable?, encoding: CCNetworkEncoding)
     case data(Data)
     
 }
