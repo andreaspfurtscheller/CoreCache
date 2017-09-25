@@ -42,8 +42,9 @@ public final class CCController<ResultType: CCManaged> {
         } set(newDelegate) {
             if let delegate = newDelegate {
                 controllerDelegate = CCFetchedResultsControllerDelegate(delegate: delegate, parent: self)
+            } else {
+                controllerDelegate = nil
             }
-            controllerDelegate = nil
             resultsController.delegate = controllerDelegate
         }
     }
