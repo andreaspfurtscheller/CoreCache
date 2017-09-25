@@ -32,6 +32,16 @@ public protocol CCCachable: CCIndexable {
     ///   - object:    The object to be modified by the container.
     static func map<T>(from container: T, to object: Self)
     
+    static func willScratch(object: Self, didCreate: Bool)
+    
+}
+
+extension CCCachable {
+    
+    static func willScratch(object: Self, didCreate: Bool) {
+        // do nothing
+    }
+    
 }
 
 public extension CCCachable where Self: CCManaged {
@@ -39,7 +49,8 @@ public extension CCCachable where Self: CCManaged {
     @discardableResult
     public static func scratch<T>(with container: T, primaryKey: PrimaryKeyType,
                                   in context: CCContext = CCManager.default.context) -> Self {
-        let object = Self.createIfNeeded(forPrimaryKey: primaryKey, in: context)
+        let (object, didCreate) = Self.createIfNeeded(forPrimaryKey: primaryKey, in: context)
+        Self.willScratch(object: object, didCreate: didCreate)
         map(from: container, to: object)
         return object
     }

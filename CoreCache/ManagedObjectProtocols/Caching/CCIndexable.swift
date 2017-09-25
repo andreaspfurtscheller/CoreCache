@@ -77,4 +77,16 @@ extension CCIndexable where Self: CCManaged {
         return object
     }
     
+    @discardableResult
+    internal static func createIfNeeded(forPrimaryKey key: PrimaryKeyType,
+                                        in context: CCContext = CCManager.default.context) -> (object: Self, didCreate: Bool) {
+        if let object = self.object(forPrimaryKey: key, in: context) {
+            return (object, false)
+        } else {
+            let object = Self.create(in: context)
+            object.setValue(key, forKey: primaryKeyPath)
+            return (object, true)
+        }
+    }
+    
 }
