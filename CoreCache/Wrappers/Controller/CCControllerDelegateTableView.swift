@@ -40,12 +40,12 @@ open class CCControllerDelegateTableView: CCControllerDelegate {
         self.delegate = delegate
     }
     
-    public func controllerWillChangeContent<ResultType>(_ controller: CCController<ResultType>) {
+    open func controllerWillChangeContent<ResultType>(_ controller: CCController<ResultType>) {
         tableView.beginUpdates()
     }
     
-    public func controller<ResultType>(_ controller: CCController<ResultType>,
-                                       didChangeWithOperation changeOperation: CCObjectChangeOperation) {
+    open func controller<ResultType>(_ controller: CCController<ResultType>,
+                                     didChangeWithOperation changeOperation: CCObjectChangeOperation) {
         switch changeOperation {
         case .deletion(at: let indexPath):
             tableView.deleteRows(at: [indexPath], with: deletionAnimation)
@@ -61,12 +61,12 @@ open class CCControllerDelegateTableView: CCControllerDelegate {
         }
     }
     
-    public func controllerDidChangeContent<ResultType>(_ controller: CCController<ResultType>) {
+    open func controllerDidChangeContent<ResultType>(_ controller: CCController<ResultType>) {
         tableView.endUpdates()
     }
     
-    public func controller<ResultType>(_ controller: CCController<ResultType>,
-                                       didChangeSectionWithOperation changeOperation: CCSectionChangeOperation) {
+    open func controller<ResultType>(_ controller: CCController<ResultType>,
+                                     didChangeSectionWithOperation changeOperation: CCSectionChangeOperation) {
         switch changeOperation {
         case .deletion(at: let index):
             tableView.deleteSections([index], with: sectionDeletionAnimation)
