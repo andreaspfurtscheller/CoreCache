@@ -128,6 +128,7 @@ open class CCNetworkScheduler {
         }
     }
     
+    @discardableResult
     public func request<Operation: CCNetworkOperation>(_ operation: Operation, priority: RequestPriority = .required,
                                                        progressHandler: @escaping (Int) -> Void = { _ in return }) -> CPPromise<Operation.ResultType> {
         guard let request = try? self.createRequest(from: operation) else {
@@ -191,7 +192,8 @@ open class CCNetworkScheduler {
             .validateStatusCode(accepting: operation.validStatusCodes)
             .catch { error in
                 if case WPError.responseError(let data) = error {
-                    throw operation.processError(from: data)
+                    let err = try operation.processError(from: data)
+                    throw err
                 }
             }
         return operation.process(data: dataPromise)
