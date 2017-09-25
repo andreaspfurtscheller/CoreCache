@@ -30,6 +30,8 @@ open class CCControllerDelegateTableView: CCControllerDelegate {
     private var tableView: UITableView
     private unowned let delegate: CCControllerDelegateTableViewDelegate
     
+    public var changeHandler: ((CCObjectChangeOperation) -> Void)?
+    
     /// Initializes a new `CCControllerTableView` with the given properties.
     /// 
     /// - Parameters:
@@ -59,6 +61,7 @@ open class CCControllerDelegateTableView: CCControllerDelegate {
                 delegate.configure(cell, at: indexPath)
             }
         }
+        changeHandler?(changeOperation)
     }
     
     open func controllerDidChangeContent<ResultType>(_ controller: CCController<ResultType>) {
