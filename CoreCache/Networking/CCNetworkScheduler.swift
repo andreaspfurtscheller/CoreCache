@@ -130,12 +130,19 @@ open class CCNetworkScheduler {
     
     @discardableResult
     public func request<Operation: CCNetworkOperation>(_ operation: Operation, priority: RequestPriority = .required,
-                                                       progressHandler: @escaping (Int) -> Void = { _ in return }) -> CPPromise<Operation.ResultType> {
+                                                       progressHandler: @escaping (Double) -> Void = { _ in return }) -> CPPromise<Operation.ResultType> {
         guard let request = try? self.createRequest(from: operation) else {
             return CPPromise(error: CCNetworkError.invalidRequestContent)
         }
-        request.downloadProgress { progress in
-            progressHandler(Int(progress.fractionCompleted * 100))
+        switch operation.requestContent {
+        case .data(_):
+            (request as! UploadRequest).uploadProgress { progress in
+                progressHandler(progress.fractionCompleted)
+            }
+        case .parameters(data: _, encoding: _):
+            request.downloadProgress { progress in
+                progressHandler(progress.fractionCompleted)
+            }
         }
         
         let stalledRequest = StalledRequest(request, priority: priority, identifier: String(describing: Operation.self))
