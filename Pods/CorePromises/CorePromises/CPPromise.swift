@@ -47,6 +47,13 @@ public final class CPPromise<ResultType> {
         return false
     }
     
+    internal var isPending: Bool {
+        if case .pending = self.state {
+            return true
+        }
+        return false
+    }
+    
     internal var value: ResultType? {
         if case .fulfilled(let value) = self.state {
             return value

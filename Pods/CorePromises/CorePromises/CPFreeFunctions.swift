@@ -30,6 +30,25 @@ public func promise<ResultType>(_ execute: () -> CPPromise<ResultType>) -> CPPro
     return execute()
 }
 
+/// Waits to fulfill until the first promise is fulfilled. It then returns the return value of the first promise.
+///
+/// - Parameter promises: The promises out of which one should be fulfilled.
+/// - Returns: A promise being resolved with one value of the given promises.
+public func promiseRace<T>(_ promises: CPPromise<T>...) -> CPPromise<T> {
+    guard !promises.isEmpty else {
+        return CPPromise(error: CPError.failingPromise)
+    }
+    return CPPromise { resolve, reject in
+        promises.forEach { promise in
+            promise.then(resolve).catch { error in
+                if !promises.contains(where: { $0.isPending }) {
+                    reject(error)
+                }
+            }
+        }
+    }
+}
+
 /// Waits for all promises to fulfill and returns an array of the fulfilled values once all values have arrived.
 /// The resulting promise is rejected as soon as one of the given promises fails.
 ///

@@ -25,7 +25,8 @@
 		C91DB2281F65FFE8004AB57D /* CCUpdateMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91DB2271F65FFE8004AB57D /* CCUpdateMapping.swift */; };
 		C92BC6E11F51AAED00B2315F /* CCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BC6E01F51AAED00B2315F /* CCManager.swift */; };
 		C92BC6F11F51B91F00B2315F /* CCCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BC6F01F51B91F00B2315F /* CCCachable.swift */; };
-		C92FAC661F5B26CE0020EC7A /* CCObserveable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92FAC651F5B26CE0020EC7A /* CCObserveable.swift */; };
+		C92E8E8F1F7C4A60005B694C /* CCObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92E8E8E1F7C4A60005B694C /* CCObserver.swift */; };
+		C92E8E921F7C4B24005B694C /* CCObserverChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92E8E911F7C4B24005B694C /* CCObserverChange.swift */; };
 		C92FAC6E1F5B28840020EC7A /* CCContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92FAC6D1F5B28840020EC7A /* CCContext.swift */; };
 		C92FAC701F5B28A60020EC7A /* CCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92FAC6F1F5B28A60020EC7A /* CCController.swift */; };
 		C931CB731F59D73700D4AD88 /* CCAlamofireFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C931CB721F59D73700D4AD88 /* CCAlamofireFetcher.swift */; };
@@ -92,7 +93,8 @@
 		C91DB2271F65FFE8004AB57D /* CCUpdateMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCUpdateMapping.swift; sourceTree = "<group>"; };
 		C92BC6E01F51AAED00B2315F /* CCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCManager.swift; sourceTree = "<group>"; };
 		C92BC6F01F51B91F00B2315F /* CCCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCCachable.swift; sourceTree = "<group>"; };
-		C92FAC651F5B26CE0020EC7A /* CCObserveable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCObserveable.swift; sourceTree = "<group>"; };
+		C92E8E8E1F7C4A60005B694C /* CCObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCObserver.swift; sourceTree = "<group>"; };
+		C92E8E911F7C4B24005B694C /* CCObserverChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCObserverChange.swift; sourceTree = "<group>"; };
 		C92FAC6D1F5B28840020EC7A /* CCContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCContext.swift; sourceTree = "<group>"; };
 		C92FAC6F1F5B28A60020EC7A /* CCController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCController.swift; sourceTree = "<group>"; };
 		C931CB721F59D73700D4AD88 /* CCAlamofireFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCAlamofireFetcher.swift; sourceTree = "<group>"; };
@@ -240,10 +242,11 @@
 			path = Caching;
 			sourceTree = "<group>";
 		};
-		C91D14A31F5B974300210514 /* Observing */ = {
+		C92E8E901F7C4B18005B694C /* Observing */ = {
 			isa = PBXGroup;
 			children = (
-				C92FAC651F5B26CE0020EC7A /* CCObserveable.swift */,
+				C92E8E8E1F7C4A60005B694C /* CCObserver.swift */,
+				C92E8E911F7C4B24005B694C /* CCObserverChange.swift */,
 			);
 			path = Observing;
 			sourceTree = "<group>";
@@ -254,7 +257,6 @@
 				C9F756541F5B2C990073342E /* CCManageable.swift */,
 				C91D14A11F5B96B300210514 /* Fetching */,
 				C91D14A21F5B972400210514 /* Caching */,
-				C91D14A31F5B974300210514 /* Observing */,
 			);
 			path = ManagedObjectProtocols;
 			sourceTree = "<group>";
@@ -295,6 +297,7 @@
 				C95133301F5A57D800683BC1 /* CCRequest.swift */,
 				C9AE7D821F5A683C00DC0CE1 /* CCGarbageCollector.swift */,
 				C9D2D4511F5B43B900CB2334 /* CCManaged.swift */,
+				C92E8E901F7C4B18005B694C /* Observing */,
 				C91D149E1F5B86D000210514 /* Controller */,
 			);
 			path = Wrappers;
@@ -553,7 +556,6 @@
 			files = (
 				C9AE7D891F5AD1FE00DC0CE1 /* CCSortOrder.swift in Sources */,
 				C91DB2281F65FFE8004AB57D /* CCUpdateMapping.swift in Sources */,
-				C92FAC661F5B26CE0020EC7A /* CCObserveable.swift in Sources */,
 				C9C6F8191F5B3AA900BF460B /* CCControllerDelegate.swift in Sources */,
 				C91D14991F5B68F700210514 /* CCChangeOperation.swift in Sources */,
 				C931CB791F5A4BB100D4AD88 /* CCFilterable.swift in Sources */,
@@ -561,10 +563,12 @@
 				C931CB771F5A4BA800D4AD88 /* CCSortable.swift in Sources */,
 				C9AE7D871F5AD1F800DC0CE1 /* CCPath.swift in Sources */,
 				C919FF311F75891900E615F4 /* CCDictionaryConvertible.swift in Sources */,
+				C92E8E8F1F7C4A60005B694C /* CCObserver.swift in Sources */,
 				C99DCC841F6626CB00CAE5EA /* Array.swift in Sources */,
 				C931CB731F59D73700D4AD88 /* CCAlamofireFetcher.swift in Sources */,
 				C9027FFB1F5704C3006EC40C /* CCImageDataManager.swift in Sources */,
 				C95687581F6B157000CE98E5 /* CCNetworkError.swift in Sources */,
+				C92E8E921F7C4B24005B694C /* CCObserverChange.swift in Sources */,
 				C90C873D1F47649800E5BE6E /* CCErrorNotification.swift in Sources */,
 				C9D2D4521F5B43B900CB2334 /* CCManaged.swift in Sources */,
 				C92FAC701F5B28A60020EC7A /* CCController.swift in Sources */,

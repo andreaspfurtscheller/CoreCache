@@ -21,12 +21,15 @@
 // SOFTWARE.
 
 import CoreData
+import CoreUtility
 
 /// `CCContext` provides a wrapper for a `NSManagedObjectContext`. The publicly given functions provide basic
 /// functionality that is mostly sufficient. A `CCContext` may only be obtained from a `CCManager`.
 public final class CCContext {
     
     internal let objectContext: NSManagedObjectContext
+    
+    internal lazy var observers = [(observer: CUWeakPointer<AnyObject>, observerObject: Any)]()
     
     internal init(context: NSManagedObjectContext) {
         self.objectContext = context
@@ -69,4 +72,26 @@ public final class CCContext {
         objectContext.rollback()
     }
     
+    public func observe(inhomogeneous request: CCRequest<CCManaged>, _ others: CCRequest<CCManaged>..., by observer: AnyObject,
+                        handler: @escaping (CCObserverChange<CCManaged>) -> Void) {
+        let object = CCRequestObserver(requests: [request] + others, context: self, handler: handler)
+        self.observers.append((CUWeakPointer(observer), object))
+    }
+    
+    public func observe<Element>(_ request: CCRequest<Element>, _ others: CCRequest<Element>..., by observer: AnyObject,
+                                 handler: @escaping (CCObserverChange<Element>) -> Void) {
+        let object = CCRequestObserver(requests: [request] + others, context: self, handler: handler)
+        self.observers.append((CUWeakPointer(observer), object))
+    }
+    
+    public func observe<Element: CCManaged>(_ element: Element, _ others: Element..., by observer: AnyObject,
+                                            handler: @escaping (CCObserverChange<Element>) -> Void) {
+        let object = CCElementObserver(elements: [element] + others, context: self, handler: handler)
+        self.observers.append((CUWeakPointer(observer), object))
+    }
+    
+    public func stopObserving(by observer: AnyObject) {
+        self.observers.removeDeallocateds { $0.observer }
+        self.observers.remove { $0.observer.pointee! === observer }
+    }
 }
