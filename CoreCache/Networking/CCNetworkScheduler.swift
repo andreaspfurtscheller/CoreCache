@@ -135,79 +135,81 @@ open class CCNetworkScheduler {
     @discardableResult
     public func request<Operation: CCNetworkOperation>(_ operation: Operation, priority: RequestPriority = .required,
                                                        progressHandler: @escaping (Double) -> Void = { _ in return }) -> CPPromise<Operation.ResultType> {
-        guard let request = try? self.createRequest(from: operation) else {
-            return CPPromise(error: CCNetworkError.invalidRequestContent)
-        }
-        switch operation.requestContent {
-        case .data(_):
-            (request as! UploadRequest).uploadProgress { progress in
-                progressHandler(progress.fractionCompleted)
+        return operation.authorize().then {
+            guard let request = try? self.createRequest(from: operation) else {
+                return CPPromise(error: CCNetworkError.invalidRequestContent)
             }
-        case .parameters(data: _, encoding: _):
-            request.downloadProgress { progress in
-                progressHandler(progress.fractionCompleted)
+            switch operation.requestContent {
+            case .data(_):
+                (request as! UploadRequest).uploadProgress { progress in
+                    progressHandler(progress.fractionCompleted)
+                }
+            case .parameters(data: _, encoding: _):
+                request.downloadProgress { progress in
+                    progressHandler(progress.fractionCompleted)
+                }
             }
-        }
-        
-        let stalledRequest = StalledRequest(request, priority: priority, identifier: String(describing: Operation.self))
-        
-        self.lockingQueue.async {
-            self.stalledRequests.insert(stalledRequest)
-            self.performRequests()
-        }
-        let dataPromise: CPPromise<Data> = request.responseData { response in
-            #if DEBUG
+            
+            let stalledRequest = StalledRequest(request, priority: priority, identifier: String(describing: Operation.self))
+            
+            self.lockingQueue.async {
+                self.stalledRequests.insert(stalledRequest)
+                self.performRequests()
+            }
+            let dataPromise: CPPromise<Data> = request.responseData { response in
+                #if DEBUG
+                    switch response.result {
+                    case .success(let data):
+                        if self.shouldPrintResponses {
+                            print(">>> CCNetworkManager: Request \(stalledRequest.uniqueIdentifier) did finish...")
+                            if let statusCode = response.response?.statusCode {
+                                print("    Status code: \(statusCode)")
+                            } else {
+                                print("    Status code: <undefined>")
+                            }
+                            let jsonString = WPJson(reading: data).description(forOffset: "\t\t", prettyPrinted: true,
+                                                                               truncatesStrings: true)
+                            print("    JSON Response:\n\(jsonString)")
+                            print("<<< ... end of response.")
+                        }
+                    case .failure(let error):
+                        if self.shouldPrintResponses {
+                            print(">>> CCNetworkManager: Request \(stalledRequest.uniqueIdentifier) did finish...")
+                            print("    FAILURE: \(error)")
+                            print("<<< ... end of response.")
+                        }
+                    }
+                #endif
                 switch response.result {
                 case .success(let data):
-                    if self.shouldPrintResponses {
-                        print(">>> CCNetworkManager: Request \(stalledRequest.uniqueIdentifier) did finish...")
-                        if let statusCode = response.response?.statusCode {
-                            print("    Status code: \(statusCode)")
-                        } else {
-                            print("    Status code: <undefined>")
-                        }
-                        let jsonString = WPJson(reading: data).description(forOffset: "\t\t", prettyPrinted: true,
-                                                                           truncatesStrings: true)
-                        print("    JSON Response:\n\(jsonString)")
-                        print("<<< ... end of response.")
+                    self.lockingQueue.async {
+                        self.didFinish(String(describing: Operation.self), bytes: data.count)
+                        self.currentBandwidth = Double(data.count) / (response.timeline.requestDuration -
+                            response.timeline.latency)
+                        #if DEBUG
+                            if self.shouldPrintBandwidth {
+                                print(">>> CCNetworkManager: Current bandwidth...")
+                                print("    Bytes per second:     \(Int(self.currentBandwidth))")
+                                print("    Kilobytes per second: \(Int(self.currentBandwidth / 1_000))")
+                                print("    Megabytes per second: \(Int(self.currentBandwidth / 1_000_000))")
+                                print("<<< ... end of bandwidth.")
+                            }
+                        #endif
                     }
-                case .failure(let error):
-                    if self.shouldPrintResponses {
-                        print(">>> CCNetworkManager: Request \(stalledRequest.uniqueIdentifier) did finish...")
-                        print("    FAILURE: \(error)")
-                        print("<<< ... end of response.")
+                default:
+                    break
+                }
+                self.performRequests()
+                }
+                .validateStatusCode(accepting: operation.validStatusCodes)
+                .catch { error in
+                    if case WPError.responseError(let data) = error {
+                        let err = try operation.processError(from: data)
+                        throw err
                     }
-                }
-            #endif
-            switch response.result {
-            case .success(let data):
-                self.lockingQueue.async {
-                    self.didFinish(String(describing: Operation.self), bytes: data.count)
-                    self.currentBandwidth = Double(data.count) / (response.timeline.requestDuration -
-                        response.timeline.latency)
-                    #if DEBUG
-                        if self.shouldPrintBandwidth {
-                            print(">>> CCNetworkManager: Current bandwidth...")
-                            print("    Bytes per second:     \(Int(self.currentBandwidth))")
-                            print("    Kilobytes per second: \(Int(self.currentBandwidth / 1_000))")
-                            print("    Megabytes per second: \(Int(self.currentBandwidth / 1_000_000))")
-                            print("<<< ... end of bandwidth.")
-                        }
-                    #endif
-                }
-            default:
-                break
             }
-            self.performRequests()
-            }
-            .validateStatusCode(accepting: operation.validStatusCodes)
-            .catch { error in
-                if case WPError.responseError(let data) = error {
-                    let err = try operation.processError(from: data)
-                    throw err
-                }
-            }
-        return operation.process(data: dataPromise)
+            return operation.process(data: dataPromise)
+        }
     }
     
     private func createRequest<Operation: CCNetworkOperation>(from operation: Operation) throws -> DataRequest {

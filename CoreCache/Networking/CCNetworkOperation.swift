@@ -51,6 +51,8 @@ public protocol CCNetworkOperation {
     
     var validStatusCodes: CCNetworkStatusCodes { get }
     
+    func authorize() -> CPPromise<Void>
+    
     func process(data: CPPromise<Data>) -> CPPromise<ResultType>
     func processError(from data: Data) throws -> Error
     
@@ -76,6 +78,10 @@ public extension CCNetworkOperation {
     
     public var validStatusCodes: CCNetworkStatusCodes {
         return 200...299
+    }
+    
+    public func authorize() -> CPPromise<Void> {
+        return CPPromise(value: ())
     }
     
     public func processError(from data: Data) -> Error {
