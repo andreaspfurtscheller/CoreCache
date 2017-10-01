@@ -101,10 +101,11 @@ open class CCNetworkScheduler {
         }
         return WPJson(readingFrom: self.statusInformationUrl)
     }()
+    private lazy var hasChanges = false
     
     private var statusInformationUrl: URL {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
-        let directory = url.appendingPathComponent("cccache").appendingPathComponent("ccnetworkscheduler")
+        let directory = url.appendingPathComponent("corecache").appendingPathComponent("ccnetworkscheduler")
         try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
         return directory.appendingPathComponent("info.json")
     }
@@ -121,9 +122,12 @@ open class CCNetworkScheduler {
         sessionManager = SessionManager(configuration: configuration)
         sessionManager.startRequestsImmediately = false
         
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
-            DispatchQueue.global(qos: .background).async {
-                try? self.statusInformation.data()?.write(to: self.statusInformationUrl)
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                if let `self` = self, self.hasChanges {
+                    try? self.statusInformation.data()?.write(to: self.statusInformationUrl)
+                    self.hasChanges = false
+                }
             }
         }
     }
@@ -288,6 +292,7 @@ open class CCNetworkScheduler {
             self.statusInformation[request]["count"] = WPJson(1)
             self.statusInformation[request]["bytes"] = WPJson(bytes)
         }
+        hasChanges = true
         self.performRequests()
     }
     

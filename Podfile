@@ -10,6 +10,7 @@ target 'CoreCache' do
   pod 'AlamofireImage'
   pod 'CoreUtility'
   pod 'WebParsing'
+  pod 'SwiftKeychainWrapper'
 
   target 'CoreCacheTests' do
     inherit! :search_paths

@@ -72,12 +72,6 @@ public final class CCContext {
         objectContext.rollback()
     }
     
-    public func observe(inhomogeneous request: CCRequest<CCManaged>, _ others: CCRequest<CCManaged>..., by observer: AnyObject,
-                        handler: @escaping (CCObserverChange<CCManaged>) -> Void) {
-        let object = CCRequestObserver(requests: [request] + others, context: self, handler: handler)
-        self.observers.append((CUWeakPointer(observer), object))
-    }
-    
     public func observe<Element>(_ request: CCRequest<Element>, _ others: CCRequest<Element>..., by observer: AnyObject,
                                  handler: @escaping (CCObserverChange<Element>) -> Void) {
         let object = CCRequestObserver(requests: [request] + others, context: self, handler: handler)
