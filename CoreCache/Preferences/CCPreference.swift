@@ -47,7 +47,7 @@ public struct CCMutatingPreference<T: CCMutatingCodable> {
     private let key: String
     private unowned let preferences: CCPreferences
     
-    public init(_ key: String, preferences: CCPreferences) {
+    public init(_ key: String, preferences: CCPreferences = CCPreferences.default) {
         self.key = key
         self.preferences = preferences
     }
