@@ -34,6 +34,12 @@ extension String: CCMutatingCodable {
     }
 }
 
+extension Bool: CCMutatingCodable {
+    public static var fallbackDecoded: Bool {
+        return false
+    }
+}
+
 extension Int: CCMutatingCodable {
     public static var fallbackDecoded: Int {
         return 0
