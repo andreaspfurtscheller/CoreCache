@@ -27,7 +27,7 @@ public struct CCFlagPreference {
     private let key: String
     private unowned let preferences: CCPreferences
     
-    public init(_ key: String, preferences: CCPreferences) {
+    public init(_ key: String, preferences: CCPreferences = CCPreferences.default) {
         self.key = key
         self.preferences = preferences
     }
@@ -58,6 +58,7 @@ public struct CCMutatingPreference<T: CCMutatingCodable> {
     
     public func set(_ value: T) {
         preferences.preferences[key] = try! WPJsonEncoder.encode(value)
+        preferences.write()
     }
     
 }

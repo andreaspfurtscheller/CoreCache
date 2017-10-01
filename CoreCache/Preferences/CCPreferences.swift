@@ -27,6 +27,8 @@ import SwiftKeychainWrapper
 
 open class CCPreferences {
     
+    public static var `default`: CCPreferences! = nil
+    
     private let filename: String
     
     private lazy var hasChanges = false
@@ -50,7 +52,7 @@ open class CCPreferences {
         return directory.appendingPathComponent("\(filename).json")
     }
     
-    init(filename: String) {
+    public init(filename: String) {
         self.filename = filename
     }
     
