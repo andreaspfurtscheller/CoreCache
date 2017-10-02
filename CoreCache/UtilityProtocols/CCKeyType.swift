@@ -22,7 +22,7 @@
 
 import Foundation
 
-public protocol CCKeyType {
+public protocol CCKeyType: CVarArg {
     
     static var argsIdentifier: String { get }
     
@@ -52,7 +52,7 @@ extension Int16: CCKeyType {
     }
 }
 
-extension UUID: CCKeyType, CVarArg {
+extension UUID: CCKeyType {
     public static var argsIdentifier: String {
         return "%@"
     }

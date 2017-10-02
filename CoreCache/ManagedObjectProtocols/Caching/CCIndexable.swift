@@ -37,8 +37,6 @@ public protocol CCIndexable: CCManageable {
 
 public extension CCIndexable {
     
-    public typealias PrimaryKeyType = String
-    
     public static var primaryKeyPath: String {
         return "cd_id"
     }
