@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = 'CoreCache'
-  s.version = '0.6.0'
+  s.version = '0.6.1'
   s.summary          = 'CoreCache provides a leightweight wrapper for Apple\'s complex CoreData
                         framework.'
 

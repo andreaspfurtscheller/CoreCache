@@ -135,11 +135,13 @@ public final class CCImageCache {
             return UserDefaults.standard.integer(forKey: CCImageCache.filePath(forIdentifier: identifier) + "_size")
         } set {
             #if DEBUG
-                print(">>> CCImageCache: Current cache size...")
-                print("    Bytes:     \(newValue)")
-                print("    Kilobytes: \(newValue / 1_000)")
-                print("    Megabytes: \(newValue / 1_000_000)")
-                print("<<< ... end of cache size.")
+                if shouldPrintCacheSize {
+                    print(">>> CCImageCache: Current cache size...")
+                    print("    Bytes:     \(newValue)")
+                    print("    Kilobytes: \(newValue / 1_000)")
+                    print("    Megabytes: \(newValue / 1_000_000)")
+                    print("<<< ... end of cache size.")
+                }
             #endif
             UserDefaults.standard.set(newValue, forKey: CCImageCache.filePath(forIdentifier: identifier) + "_size")
             if newValue > capacity {
