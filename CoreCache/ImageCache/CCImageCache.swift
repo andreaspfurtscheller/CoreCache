@@ -30,6 +30,10 @@ import CoreUtility
 /// delays, even if quickly scrolling through a table view full of images.
 public final class CCImageCache {
     
+    #if DEBUG
+        var shouldPrintCacheSize = true
+    #endif
+    
     /// The default cache. The use of the default cache is enough for most applications as it provides a ubiquitous
     /// cache for the entire application.
     public private(set) static var `default`: CCImageCache = {
@@ -44,6 +48,8 @@ public final class CCImageCache {
     ///         as well as from your Firebase Storage), currently, the only option is to declare another image cache.
     public var imageFetcher: CCImageFetching = CCAlamofireFetcher()
     
+    public var imageUploader: CCImageUploading = CCAlamofireUploader()
+    
     /// Returns a promise for the image at the given url. The fetching process is performed as follows:
     /// 1. An in-memory `NSCache` is asked for the image for the given url.
     /// 2. If the image could not be found in the in-memory cache, the persistent cache is asked for the image at
@@ -54,7 +60,7 @@ public final class CCImageCache {
     ///
     /// - Parameter url: The url of the image to retrieve.
     /// - Returns: A promise for the image at the given url.
-    public func image(forUrl url: String) -> CPPromise<UIImage> {
+    public func image(forUrl url: String, progressHandler: @escaping (Double) -> Void = { _ in return }) -> CPPromise<UIImage> {
         return CPPromise { resolve, reject in
             if let image = self.cache.object(forKey: url as NSString) {
                 resolve(image)
@@ -73,7 +79,7 @@ public final class CCImageCache {
                         reject(error)
                         return
                     }
-                    self.imageFetcher.fetchImage(forUrl: url)
+                    self.imageFetcher.fetchImage(forUrl: url, progressHandler: progressHandler)
                         .then { image in
                             self.setImage(image, forUrl: url, on: backgroundContext)
                             backgroundContext.write()
@@ -84,6 +90,11 @@ public final class CCImageCache {
                 }
             }
         }
+    }
+    
+    public func uploadImage(_ image: UIImage, toUrl url: String, progressHandler: @escaping (Double) -> Void = { _ in return }) -> CPPromise<Void> {
+        self.setImage(image, forUrl: url)
+        return imageUploader.uploadImageData(compression.data(from: image), toUrl: url, progressHandler: progressHandler)
     }
     
     /// Inserts the image into the cache (both into the in-memory as well as the on-disk cache). If an image for the
@@ -123,6 +134,13 @@ public final class CCImageCache {
         get {
             return UserDefaults.standard.integer(forKey: CCImageCache.filePath(forIdentifier: identifier) + "_size")
         } set {
+            #if DEBUG
+                print(">>> CCImageCache: Current cache size...")
+                print("    Bytes:     \(newValue)")
+                print("    Kilobytes: \(newValue / 1_000)")
+                print("    Megabytes: \(newValue / 1_000_000)")
+                print("<<< ... end of cache size.")
+            #endif
             UserDefaults.standard.set(newValue, forKey: CCImageCache.filePath(forIdentifier: identifier) + "_size")
             if newValue > capacity {
                 thinCache()

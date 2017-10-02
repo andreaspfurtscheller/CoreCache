@@ -34,6 +34,6 @@ public protocol CCImageFetching {
     ///            is rejected when an error occurs while fetching the image.
     ///
     /// - Attention: The method is not guaranteed to be called on the main thread.
-    func fetchImage(forUrl url: String) -> CPPromise<UIImage>
+    func fetchImage(forUrl url: String, progressHandler: @escaping (Double) -> Void) -> CPPromise<UIImage>
     
 }

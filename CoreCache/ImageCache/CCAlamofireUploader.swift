@@ -28,22 +28,19 @@ import CoreUtility
 
 /// The `CCAlamofireFetcher` provides a way of fetching an image using `Alamofire` in conjunction with
 /// `AlamofireImage`.
-public struct CCAlamofireFetcher: CCImageFetching {
+public struct CCAlamofireUploader: CCImageUploading {
     
-    public func fetchImage(forUrl url: String, progressHandler: @escaping (Double) -> Void) -> CPPromise<UIImage> {
+    public func uploadImageData(_ data: Data, toUrl url: String,
+                                progressHandler: @escaping (Double) -> Void) -> CPPromise<Void> {
         return CPPromise { resolve, reject in
-            Alamofire.request(url)
-                .downloadProgress { progress in
+            Alamofire.upload(data, to: url)
+                .uploadProgress { progress in
                     progressHandler(progress.fractionCompleted)
-                }.responseImage { response in
-                    do {
-                        if let data = response.data {
-                            resolve(try UIImage(data: data).unwrap())
-                        } else {
-                            reject(try response.error.unwrap())
-                        }
-                    } catch let error {
-                        reject(error)
+                }.response { response in
+                    if (200..<299).contains(response.response?.statusCode ?? 0) {
+                        resolve(())
+                    } else {
+                        reject(response.error ?? NSError(domain: "CoreCache", code: 500, userInfo: nil))
                     }
             }
         }

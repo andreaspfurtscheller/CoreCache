@@ -43,6 +43,8 @@
 		C95687581F6B157000CE98E5 /* CCNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95687571F6B157000CE98E5 /* CCNetworkError.swift */; };
 		C956875C1F6B5A6C00CE98E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C956875B1F6B5A6C00CE98E5 /* Data.swift */; };
 		C96632821F618384006922C0 /* CCCache.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C90C87351F4751EC00E5BE6E /* CCCache.xcdatamodeld */; };
+		C98953BC1F827E7D00DEE629 /* CCAlamofireUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98953BB1F827E7D00DEE629 /* CCAlamofireUploader.swift */; };
+		C98953BE1F827FD600DEE629 /* CCImageUploading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98953BD1F827FD600DEE629 /* CCImageUploading.swift */; };
 		C9940A3F1F5A633D0047A26F /* CCUpdateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */; };
 		C9989EC01F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9989EBF1F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift */; };
 		C99DCC821F66242500CAE5EA /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DCC811F66242500CAE5EA /* Set.swift */; };
@@ -114,6 +116,8 @@
 		C956874F1F6AB44500CE98E5 /* CCNetworkScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNetworkScheduler.swift; sourceTree = "<group>"; };
 		C95687571F6B157000CE98E5 /* CCNetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNetworkError.swift; sourceTree = "<group>"; };
 		C956875B1F6B5A6C00CE98E5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		C98953BB1F827E7D00DEE629 /* CCAlamofireUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCAlamofireUploader.swift; sourceTree = "<group>"; };
+		C98953BD1F827FD600DEE629 /* CCImageUploading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCImageUploading.swift; sourceTree = "<group>"; };
 		C9940A3E1F5A633D0047A26F /* CCUpdateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCUpdateable.swift; sourceTree = "<group>"; };
 		C9989EBF1F5CA6C000482E11 /* CCControllerDelegateCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCControllerDelegateCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		C99DCC811F66242500CAE5EA /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
@@ -298,7 +302,9 @@
 			children = (
 				C909F3F61F536D7D002B9D34 /* CCImageCache.swift */,
 				C931CB741F59D74000D4AD88 /* CCImageFetching.swift */,
+				C98953BD1F827FD600DEE629 /* CCImageUploading.swift */,
 				C931CB721F59D73700D4AD88 /* CCAlamofireFetcher.swift */,
+				C98953BB1F827E7D00DEE629 /* CCAlamofireUploader.swift */,
 				C9027FFA1F5704C3006EC40C /* CCImageDataManager.swift */,
 				C90C87331F474F0900E5BE6E /* CCImage.swift */,
 				C90C87351F4751EC00E5BE6E /* CCCache.xcdatamodeld */,
@@ -584,6 +590,7 @@
 				C956875C1F6B5A6C00CE98E5 /* Data.swift in Sources */,
 				C931CB771F5A4BA800D4AD88 /* CCSortable.swift in Sources */,
 				C902C8D81F81529700F9467D /* CCSecureCodable.swift in Sources */,
+				C98953BC1F827E7D00DEE629 /* CCAlamofireUploader.swift in Sources */,
 				C9AE7D871F5AD1F800DC0CE1 /* CCPath.swift in Sources */,
 				C919FF311F75891900E615F4 /* CCDictionaryConvertible.swift in Sources */,
 				C92E8E8F1F7C4A60005B694C /* CCObserver.swift in Sources */,
@@ -625,6 +632,7 @@
 				C909F3F71F536D7D002B9D34 /* CCImageCache.swift in Sources */,
 				C95687501F6AB44500CE98E5 /* CCNetworkScheduler.swift in Sources */,
 				C916F4F11F5CA4B400F5EA4B /* CCControllerDelegateTableViewDelegate.swift in Sources */,
+				C98953BE1F827FD600DEE629 /* CCImageUploading.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
