@@ -92,9 +92,11 @@ public final class CCImageCache {
         }
     }
     
-    public func uploadImage(_ image: UIImage, toUrl url: String, progressHandler: @escaping (Double) -> Void = { _ in return }) -> CPPromise<Void> {
-        self.setImage(image, forUrl: url)
-        return imageUploader.uploadImageData(compression.data(from: image), toUrl: url, progressHandler: progressHandler)
+    public func uploadImage(forUrl url: String, progressHandler: @escaping (Double) -> Void = { _ in return }) -> CPPromise<Void> {
+        guard let image = CCImage.object(forPrimaryKey: url, in: manager.context) else {
+            return CPPromise(error: CPError.failingPromise)
+        }
+        return imageUploader.uploadImageData(image.data, toUrl: url, progressHandler: progressHandler)
     }
     
     /// Inserts the image into the cache (both into the in-memory as well as the on-disk cache). If an image for the
