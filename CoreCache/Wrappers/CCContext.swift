@@ -29,7 +29,7 @@ public final class CCContext {
     
     internal let objectContext: NSManagedObjectContext
     
-    internal lazy var observers = [(observer: CUWeakPointer<AnyObject>, observerObject: Any)]()
+    internal lazy var observers = [AnyHashable: [Any]]()
     
     internal init(context: NSManagedObjectContext) {
         self.objectContext = context
@@ -72,20 +72,21 @@ public final class CCContext {
         objectContext.rollback()
     }
     
-    public func observe<Element>(_ request: CCRequest<Element>, _ others: CCRequest<Element>..., by observer: AnyObject,
-                                 handler: @escaping (CCObserverChange<Element>) -> Void) {
+    /// - Attention: Reference `[unowned self]` in the handler to avoid strong reference cycles.
+    public func addObserver<Element>(_ observer: AnyHashable, for request: CCRequest<Element>, _ others: CCRequest<Element>...,
+                                     handler: @escaping (CCObserverChange<Element>) -> Void) {
         let object = CCRequestObserver(requests: [request] + others, context: self, handler: handler)
-        self.observers.append((CUWeakPointer(observer), object))
+        self.observers[observer] = (self.observers[observer] ?? []) + [object]
     }
     
-    public func observe<Element: CCManaged>(_ element: Element, _ others: Element..., by observer: AnyObject,
-                                            handler: @escaping (CCObserverChange<Element>) -> Void) {
+    /// - Attention: Reference `[unowned self]` in the handler to avoid strong reference cycles.
+    public func addObserver<Element: CCManaged>(_ observer: AnyHashable, for element: Element, _ others: Element...,
+                                                handler: @escaping (CCObserverChange<Element>) -> Void) {
         let object = CCElementObserver(elements: [element] + others, context: self, handler: handler)
-        self.observers.append((CUWeakPointer(observer), object))
+        self.observers[observer] = (self.observers[observer] ?? []) + [object]
     }
     
-    public func stopObserving(by observer: AnyObject) {
-        self.observers.removeDeallocateds { $0.observer }
-        self.observers.remove { $0.observer.pointee! === observer }
+    public func removeObserver(_ observer: AnyHashable) {
+        self.observers[observer] = nil
     }
 }

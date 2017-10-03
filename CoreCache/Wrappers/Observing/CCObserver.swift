@@ -35,7 +35,7 @@ internal class CCObserver<Element: NSManagedObject & CCManageable> {
     }
     
     func handleObserverChange(_ change: CCObserverContextChanges<Element>) {
-        context.observers.removeDeallocateds { $0.observer }
+        
     }
     
     @objc private func handleNotification(_ notification: Notification) {
