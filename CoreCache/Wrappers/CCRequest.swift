@@ -97,7 +97,7 @@ public final class CCRequest<ResultType: NSManagedObject & CCManageable> {
     }
 }
 
-extension CCRequest where ResultType: CCManaged {
+extension CCRequest where ResultType: CCManaged & CCSortable {
     
     /// Returns a `CCController` based on the current fetch request.
     ///

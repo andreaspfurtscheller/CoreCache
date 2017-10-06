@@ -37,6 +37,17 @@ extension CCUpdateable where Self: CCManaged {
         Self.update(property, on: self)
         return self
     }
+}
+
+public protocol CCTriggerable {
+    
+    associatedtype Trigger: CCPath
     
 }
 
+extension CCTriggerable where Self: CCManaged {
+    
+    public func triggerObservers(for trigger: Trigger) {
+        self.setValue(self.value(forKey: trigger.rawValue), forKey: trigger.rawValue)
+    }
+}

@@ -46,5 +46,4 @@ public struct CCModel {
             .map { NSClassFromString($0) }
             .map { $0 as! NSManagedObject.Type }
     }
-    
 }
