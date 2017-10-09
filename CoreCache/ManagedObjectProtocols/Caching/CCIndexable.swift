@@ -33,6 +33,9 @@ public protocol CCIndexable: CCManageable {
     /// The key path for the primary key. The default is set to `cd_id`.
     static var primaryKeyPath: String { get }
     
+    func willCreateObject()
+    func didCreateObject()
+    
 } 
 
 public extension CCIndexable {
@@ -41,6 +44,13 @@ public extension CCIndexable {
         return "cd_id"
     }
     
+    public func willCreateObject() {
+        // do nothing
+    }
+    
+    public func didCreateObject() {
+        // do nothing
+    }
 }
 
 extension CCIndexable where Self: CCManaged {
@@ -70,9 +80,7 @@ extension CCIndexable where Self: CCManaged {
     @discardableResult
     public static func createIfNeeded(forPrimaryKey key: PrimaryKeyType,
                                       in context: CCContext = CCManager.default.context) -> Self {
-        let object = self.object(forPrimaryKey: key, in: context) ?? Self.create(in: context)
-        object.setValue(key, forKey: primaryKeyPath)
-        return object
+        return createIfNeeded(forPrimaryKey: key, in: context).object
     }
     
     @discardableResult
@@ -82,7 +90,9 @@ extension CCIndexable where Self: CCManaged {
             return (object, false)
         } else {
             let object = Self.create(in: context)
+            object.willCreateObject()
             object.setValue(key, forKey: primaryKeyPath)
+            object.didCreateObject()
             return (object, true)
         }
     }
