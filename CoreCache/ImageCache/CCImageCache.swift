@@ -111,8 +111,14 @@ public final class CCImageCache {
         if let oldObject = CCImage.object(forPrimaryKey: url, in: context) {
             self.size -= oldObject.size
         }
-        let object = CCImage.createIfNeeded(forPrimaryKey: url, in: context)
-            .update(.imageData(compression.data(from: image)))
+        var object: CCImage!
+        if let maxSize = maximumSize {
+            object = CCImage.createIfNeeded(forPrimaryKey: url, in: context)
+                .update(.imageData(image.resized(toMaxSize: maxSize, withCompression: compression)))
+        } else {
+            object = CCImage.createIfNeeded(forPrimaryKey: url, in: context)
+                .update(.imageData(compression.data(from: image)))
+        }
         self.size += object.size
     }
     
@@ -129,6 +135,10 @@ public final class CCImageCache {
     ///         declare another image cache.
     public var compression: CUImageCompression {
         return .jpeg(0.5)
+    }
+    
+    public var maximumSize: CGSize? {
+        return nil
     }
     
     /// The current size of the cache in bytes.
