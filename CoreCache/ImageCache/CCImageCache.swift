@@ -28,6 +28,7 @@ import CoreUtility
 ///
 /// The class has been highly optimized to avoid blocking the user interface. As a result, there should not be any
 /// delays, even if quickly scrolling through a table view full of images.
+@available(iOS 10.0, *)
 public final class CCImageCache {
     
     #if DEBUG
