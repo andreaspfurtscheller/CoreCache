@@ -30,14 +30,14 @@ public protocol CCCachable: CCIndexable {
     /// - Parameters:
     ///   - container: The container to use for mapping the data.
     ///   - object:    The object to be modified by the container.
-    static func map<T>(from container: T, to object: Self)
+    static func map(from container: Any, to object: Self)
     
 }
 
 public extension CCCachable where Self: CCManaged {
     
     @discardableResult
-    public static func scratch<T>(with container: T, primaryKey: PrimaryKeyType,
+    public static func scratch(with container: Any, primaryKey: PrimaryKeyType,
                                   in context: CCContext = CCManager.default.context) -> Self {
         let object = Self.createIfNeeded(forPrimaryKey: primaryKey, in: context)
         map(from: container, to: object)
